@@ -1,0 +1,23 @@
+@import "../../styles/layout.scss";
+@import "../../styles/colors.scss";
+
+.sketch {
+    display: grid;
+    grid-template-columns: [sketch-start] auto [canvas] auto [sketch-end];
+    grid-template-rows: [row-start] auto [row-end];
+    height: 100%;
+    overflow: hidden;
+
+    .canvas {
+        grid-row: 1;
+        grid-column: sketch-start / canvas;
+        overflow: hidden;
+    }
+
+    .properties {
+        grid-row: 1;
+        grid-column: canvas / sketch-end;
+        border-left: lighten($base-color-light, 50) 2px solid;
+        padding: 0px 20px;
+    }
+}

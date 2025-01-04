@@ -1,0 +1,10 @@
+@import "../../../styles/colors.scss";
+
+.vector {
+    display: grid;
+    grid-auto-flow: column;
+
+    label {
+        padding: 0px 10px;
+    }
+}

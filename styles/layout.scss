@@ -1,0 +1,23 @@
+.grid_layout {
+    display: grid;
+    grid-template-columns: [side-col] min-content [body-col] auto [end-col];
+    grid-template-rows: [title-row] min-content [body-row] auto [end-row];
+    width: 100%;
+    height: 100%;
+
+    .navbar {
+        grid-column: side-col / end-col;
+        grid-row: title-row;
+    }
+
+    .sidebar {
+        grid-column: side-col;
+        grid-row: body-row;
+    }
+
+    .body {
+        grid-column: body-col;
+        grid-row: body-row;
+        overflow: hidden;
+    }
+}
