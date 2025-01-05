@@ -1,0 +1,19 @@
+{
+  // Configuration recommended by prettier-eslint
+  // https://github.com/idahogurl/vs-code-prettier-eslint?tab=readme-ov-file#project-settings
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  },
+  "files.autoSave": "onFocusChange",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

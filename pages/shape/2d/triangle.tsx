@@ -13,15 +13,20 @@ import { Rectangle } from "../../../lib/drawing/shape/2d/rectangle";
 import { Triangle } from "../../../lib/drawing/shape/2d/triangle";
 
 export default function RectanglePage() {
-    let [triangle, setTriangle] = useState(new Triangle("Tri 1", new THREE.Vector3(-1, -1, 0), new THREE.Vector3(1, -1, 0), new THREE.Vector3(0, 1, 0)));
-    let [sketch, setSketch] = useState(new Sketch([triangle]));
+  let [triangle, setTriangle] = useState(
+    new Triangle(
+      "Tri 1",
+      new THREE.Vector3(-1, -1, 0),
+      new THREE.Vector3(1, -1, 0),
+      new THREE.Vector3(0, 1, 0),
+    ),
+  );
+  let [sketch, setSketch] = useState(new Sketch([triangle]));
 
-    function onPropertyChanged(property: Property) {
-        setTriangle(triangle);
-        setSketch(new Sketch([triangle]));
-    }
+  function onPropertyChanged(property: Property) {
+    setTriangle(triangle);
+    setSketch(new Sketch([triangle]));
+  }
 
-    return (
-        <SketchBook sketch={sketch} onPropertyChanged={onPropertyChanged} />
-    )
+  return <SketchBook sketch={sketch} onPropertyChanged={onPropertyChanged} />;
 }

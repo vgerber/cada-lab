@@ -12,20 +12,30 @@ import { DragPoint } from "../../../lib/drawing/sketch/interaction";
 import { SketchShape } from "../../../lib/drawing/sketch/sketch_shape";
 
 export default function LineShape2d() {
-    let [sketch, setSketch] = useState(setupSketch());
+  let [sketch, setSketch] = useState(setupSketch());
 
-    return (
-        <SketchBook sketch={sketch} onPropertyChanged={() => { }} />
-    )
+  return <SketchBook sketch={sketch} onPropertyChanged={() => {}} />;
 }
 
 function setupSketch(): Sketch {
-    let line = new Line("Line 1", new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 0));
-    let lineADrag = new DragPoint(line, (l) => l.a, (l, position) => (l.a.set(position.x, position.y, 0)));
-    let lineBDrag = new DragPoint(line, (l) => l.b, (l, position) => (l.b.set(position.x, position.y, 0)));
-    let sketchLine = new SketchShape(line);
-    sketchLine.addInteractable(lineADrag);
-    sketchLine.addInteractable(lineBDrag);
-    console.log(sketchLine);
-    return new Sketch([sketchLine]);
+  let line = new Line(
+    "Line 1",
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(1, 1, 0),
+  );
+  let lineADrag = new DragPoint(
+    line,
+    (l) => l.a,
+    (l, position) => l.a.set(position.x, position.y, 0),
+  );
+  let lineBDrag = new DragPoint(
+    line,
+    (l) => l.b,
+    (l, position) => l.b.set(position.x, position.y, 0),
+  );
+  let sketchLine = new SketchShape(line);
+  sketchLine.addInteractable(lineADrag);
+  sketchLine.addInteractable(lineBDrag);
+  console.log(sketchLine);
+  return new Sketch([sketchLine]);
 }

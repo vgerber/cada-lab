@@ -5,9 +5,6 @@ import { Sketch } from "../../lib/drawing/sketch/sketch";
 import { SubTopic } from "../../lib/routing/sub_topic";
 import styles from "./index.module.scss";
 
-
 export default function Shape() {
-    return (
-        <ShapePage sketch={new Sketch([])} />
-    )
+  return <ShapePage sketch={new Sketch([])} />;
 }

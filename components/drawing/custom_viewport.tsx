@@ -7,7 +7,5 @@ import * as THREE from "three";
 import Camera from "./orthographic_camera";
 
 export default function Viewport() {
-    return (
-        <></>
-    )
+  return <></>;
 }

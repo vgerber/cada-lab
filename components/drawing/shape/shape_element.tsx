@@ -15,16 +15,15 @@ import { CatmullRomSpline } from "../../../lib/drawing/shape/curve/catmull_rom_s
 import CatmullRomSplineElement from "./curve/cutmull_rom_spline_element";
 
 export default function ShapeElement({ shape }: { shape: Shape }) {
-    if (shape instanceof Line) {
-        return <LineShapeElement line={shape} />
-    } else if (shape instanceof Point) {
-        return <PointShapeElement point={shape} />
-    } else if (shape instanceof Circle) {
-        return <CircleShapeElement circle={shape} />
-    } else if (shape instanceof CatmullRomSpline) {
-        return <CatmullRomSplineElement spline={shape} />
-    }
-    else {
-        return <></>
-    }
+  if (shape instanceof Line) {
+    return <LineShapeElement line={shape} />;
+  } else if (shape instanceof Point) {
+    return <PointShapeElement point={shape} />;
+  } else if (shape instanceof Circle) {
+    return <CircleShapeElement circle={shape} />;
+  } else if (shape instanceof CatmullRomSpline) {
+    return <CatmullRomSplineElement spline={shape} />;
+  } else {
+    return <></>;
+  }
 }

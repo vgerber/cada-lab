@@ -12,15 +12,19 @@ import { Property } from "../../../lib/property/types";
 import { Rectangle } from "../../../lib/drawing/shape/2d/rectangle";
 
 export default function RectanglePage() {
-    let [rect, setRectangle] = useState(new Rectangle("Rect 1", new THREE.Vector3(0, 0, 0), new THREE.Vector2(3, 5)));
-    let [sketch, setSketch] = useState(new Sketch([rect]));
+  let [rect, setRectangle] = useState(
+    new Rectangle(
+      "Rect 1",
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector2(3, 5),
+    ),
+  );
+  let [sketch, setSketch] = useState(new Sketch([rect]));
 
-    function onPropertyChanged(property: Property) {
-        setRectangle(rect);
-        setSketch(new Sketch([rect]));
-    }
+  function onPropertyChanged(property: Property) {
+    setRectangle(rect);
+    setSketch(new Sketch([rect]));
+  }
 
-    return (
-        <SketchBook sketch={sketch} onPropertyChanged={onPropertyChanged} />
-    )
+  return <SketchBook sketch={sketch} onPropertyChanged={onPropertyChanged} />;
 }
