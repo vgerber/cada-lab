@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   BooleanProperty,
   NumberProperty,
@@ -6,12 +5,11 @@ import {
   PropertyGroup,
   Vector2Property,
   Vector3Property,
-  VectorProperty,
 } from "../../lib/property/types";
+import styles from "./editor.module.scss";
 import BooleanPropertyElement from "./type/boolean_element";
 import NumberPropertyElement from "./type/number_element";
 import VectorElement from "./type/vector_element";
-import styles from "./editor.module.scss";
 
 function PropertyElement({
   property,

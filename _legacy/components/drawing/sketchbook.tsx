@@ -16,8 +16,8 @@ import SketchShapeElement from "./shape/sketch_shape_element";
 import styles from "./sketchbook.module.scss";
 
 function getBoundingBox(sketch: Sketch, oversize = 0.1): BoundingBox {
-  let sketchBoundingBox = sketch.getBoundingBox();
-  let size = sketchBoundingBox.size().multiplyScalar(oversize);
+  const sketchBoundingBox = sketch.getBoundingBox();
+  const size = sketchBoundingBox.size().multiplyScalar(oversize);
   //console.log(size);
   return new BoundingBox(
     sketchBoundingBox.min.clone().sub(size),
@@ -36,7 +36,7 @@ export default function SketchBook({
   onUpdate?: (shape: AnySketchShape) => void;
   onUpdateEnd?: (shape: AnySketchShape) => void;
 }) {
-  let [sketchBounds, setSketchBounds] = useState(getBoundingBox(sketch, 0.1));
+  const [sketchBounds, setSketchBounds] = useState(getBoundingBox(sketch, 0.1));
 
   function getProperties(): PropertyGroup {
     return new PropertyGroup(
@@ -48,7 +48,7 @@ export default function SketchBook({
   function onShapeUpdateEnd(sketchShape: AnySketchShape) {
     onUpdateEnd ? onUpdateEnd(sketchShape) : {};
     sketch.updateBoundingBox();
-    let newBounds = getBoundingBox(sketch, 0.1);
+    const newBounds = getBoundingBox(sketch, 0.1);
     setSketchBounds(newBounds);
   }
 

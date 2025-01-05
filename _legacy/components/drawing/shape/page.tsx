@@ -1,6 +1,5 @@
 import { getTopics } from "../../../lib/drawing/shape/util";
 import { Sketch } from "../../../lib/drawing/sketch/sketch";
-import { SubTopic } from "../../../lib/routing/sub_topic";
 import Navbar from "../../navbar";
 import Sidebar from "../../sidebar";
 import styles from "./page.module.scss";

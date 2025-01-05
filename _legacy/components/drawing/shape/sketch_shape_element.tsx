@@ -1,10 +1,9 @@
+import * as THREE from "three";
+import { Shape } from "../../../lib/drawing/shape/shape";
+import { AnySketchShape } from "../../../lib/drawing/sketch/sketch";
 import { SketchShape } from "../../../lib/drawing/sketch/sketch_shape";
 import InteractableElement from "./interaction/interactable_element";
 import ShapeElement from "./shape_element";
-import * as THREE from "three";
-import { useState } from "react";
-import { Shape } from "../../../lib/drawing/shape/shape";
-import { AnySketchShape } from "../../../lib/drawing/sketch/sketch";
 
 export default function SketchShapeElement({
   sketchShape,

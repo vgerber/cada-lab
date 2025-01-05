@@ -1,9 +1,9 @@
+import * as THREE from "three";
 import {
   DragPoint,
   SketchInteractable,
 } from "../../../../lib/drawing/sketch/interaction";
 import DragSphere from "../drag/sphere";
-import * as THREE from "three";
 
 export default function InteractableElement({
   interactable,

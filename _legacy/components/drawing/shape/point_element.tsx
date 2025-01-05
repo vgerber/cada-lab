@@ -1,10 +1,8 @@
 import * as THREE from "three";
 import { Point } from "../../../lib/drawing/shape/2d/point";
 
-export default function Points({ points }: { points: Point[] }) {
-  let geometry = new THREE.BufferGeometry().setFromPoints(
-    points.map((p) => p.position),
-  );
+export default function PointShapeElement({ point }: { point: Point }) {
+  let geometry = new THREE.BufferGeometry().setFromPoints([point.position]);
 
   return (
     <group>

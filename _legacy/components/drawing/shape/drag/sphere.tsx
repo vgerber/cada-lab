@@ -12,9 +12,9 @@ export default function DragSphere({
   onDrag: (arg0: THREE.Vector3) => void;
   onDragEnd: () => void;
 }) {
-  let [dragPosition, setDragPosition] = useState(position.clone());
+  const [dragPosition, setDragPosition] = useState(position.clone());
 
-  let dragBindings = useDrag(
+  const dragBindings = useDrag(
     (newPosition) => {
       setDragPosition(newPosition.clone());
       onDrag(newPosition);
@@ -22,9 +22,9 @@ export default function DragSphere({
     () => onDragEnd(),
   );
 
-  let circleRadius = useCameraSphereRadius();
+  const circleRadius = useCameraSphereRadius();
 
-  let hoverProps = useHover();
+  const hoverProps = useHover();
 
   return (
     <mesh
@@ -49,13 +49,13 @@ export default function DragSphere({
 }
 
 function useCameraSphereRadius(): number {
-  let { camera } = useThree();
+  const { camera } = useThree();
 
   let sphereRadius = 0.005;
   if (camera instanceof THREE.OrthographicCamera) {
-    let width = camera.right - camera.left;
-    let height = camera.top - camera.bottom;
-    let maxViewportSize = Math.max(width, height);
+    const width = camera.right - camera.left;
+    const height = camera.top - camera.bottom;
+    const maxViewportSize = Math.max(width, height);
     sphereRadius = 0.005 * maxViewportSize;
   }
 

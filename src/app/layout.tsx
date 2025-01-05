@@ -1,10 +1,20 @@
-import { Box, Stack } from "@mui/material";
 import Sidebar from "@/components/Sidebar";
+import { Box } from "@mui/material";
+import { ReactNode } from "react";
 
-export default function AppLayout() {
+type AppLayoutProps = {
+  children: ReactNode;
+};
+
+export default function AppLayout({ children }: AppLayoutProps) {
   return (
-    <Box>
-      <Sidebar />
-    </Box>
+    <html>
+      <body>
+        <Box sx={{ display: "grid", gridTemplateColumns: "min-content 1fr" }}>
+          <Sidebar />
+          {children}
+        </Box>
+      </body>
+    </html>
   );
 }

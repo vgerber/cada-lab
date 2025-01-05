@@ -1,6 +1,5 @@
-import { Property, PropertyGroup } from "../../property/types";
-import { Line } from "./2d/line";
-import { Point } from "./2d/point";
+import * as THREE from "three";
+import { PropertyGroup } from "../../property/types";
 
 export class BoundingBox {
   readonly min: THREE.Vector3;
