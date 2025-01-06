@@ -1,4 +1,4 @@
-import { registeredSketches } from "../components/sketches/registered_sketches";
+import { registeredSketches } from "../../components/sketches/registered_sketches";
 
 type AppPageProps = {
   params: {

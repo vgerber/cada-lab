@@ -21,7 +21,7 @@ export default function Sidebar() {
               <Typography>{group.name}</Typography>
               {Object.keys(group.registrations).map((sketchPath) => {
                 const sketch = group.registrations[sketchPath];
-                const href = `${groupPath}/${sketchPath}`;
+                const href = `/explorer/${groupPath}/${sketchPath}`;
                 return (
                   <Link key={href} href={href}>
                     {sketch.name}

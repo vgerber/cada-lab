@@ -33,9 +33,9 @@ export default function DragSphere({
       {...hoverProps.bindings}
       scale={hoverProps.isHovered ? 2 : 1}
     >
-      <sphereBufferGeometry
+      <sphereGeometry
         args={[circleRadius, 16, 16]}
-        onUpdate={(self) => {
+        onUpdate={(self: any) => {
           self.computeBoundingSphere();
         }}
       />
