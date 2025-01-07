@@ -55,7 +55,16 @@ export default function SketchBook({
   }
 
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: "1fr min-content" }}>
+    <Box
+      id="sketchBook"
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "1fr min-content",
+        minHeight: 0,
+        height: "100%",
+        overflow: "hidden",
+      }}
+    >
       <Canvas frameloop="demand">
         <OrthographicSketchCamera
           position={sketchBounds.center().add(new THREE.Vector3(0, 0, 3))}
@@ -72,7 +81,7 @@ export default function SketchBook({
           />
         ))}
       </Canvas>
-      <div>
+      <div style={{ overflow: "auto" }}>
         <PropertiesEditor
           property={getProperties()}
           onPropertyChanged={onPropertyChanged}

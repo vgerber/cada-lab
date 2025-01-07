@@ -24,10 +24,12 @@ export default function AppLayout({ children }: AppLayoutProps) {
               display: "grid",
               gridTemplateColumns: "min-content 1fr",
               height: "100%",
+              minHeight: 0,
+              overflow: "hidden",
             }}
           >
             <Sidebar />
-            <Box>{children}</Box>
+            <Box sx={{ minHeight: 0, overflow: "hidden" }}>{children}</Box>
           </Box>
         </ThemeProvider>
       </body>

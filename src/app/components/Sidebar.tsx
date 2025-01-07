@@ -5,7 +5,14 @@ import { registeredSketches } from "./sketches/registered_sketches";
 export default function Sidebar() {
   console.log(registeredSketches);
   return (
-    <Stack sx={{ background: "#1b2024", minWidth: "300px" }}>
+    <Stack
+      sx={{
+        background: "#1b2024",
+        minWidth: "300px",
+        minHeight: 0,
+        overflow: "hidden",
+      }}
+    >
       <Typography
         variant="h4"
         color="secondary"
