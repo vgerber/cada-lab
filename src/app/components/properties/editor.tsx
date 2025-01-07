@@ -6,6 +6,7 @@ import {
   Vector2Property,
   Vector3Property,
 } from "@/lib/property/types";
+import { Box, Typography } from "@mui/material";
 import BooleanPropertyElement from "./type/boolean_element";
 import NumberPropertyElement from "./type/number_element";
 import VectorElement from "./type/vector_element";
@@ -51,7 +52,7 @@ function PropertyElement({
   }
 
   // default
-  return <span>Unknonw property</span>;
+  return <Typography color="error">Unknonw property</Typography>;
 }
 
 function PropertyGroupElement({
@@ -63,7 +64,9 @@ function PropertyGroupElement({
 }) {
   return (
     <>
-      <span>{property.getName()}</span>
+      <Typography sx={{ gridColumn: "span 2" }}>
+        {property.getName()}
+      </Typography>
       {property.properties.map((prop, propIndex) => (
         <PropertyElement
           key={propIndex}
@@ -83,11 +86,19 @@ export default function PropertiesEditor({
   onPropertyChanged: (arg0: Property) => void;
 }) {
   return (
-    <div style={{ padding: "16px" }}>
+    <Box
+      sx={{
+        padding: "16px",
+        "& .MuiTextField-root": { m: 1, width: "25ch" },
+        display: "grid",
+        gridTemplateColumns: "1fr min-content",
+        gap: "10px",
+      }}
+    >
       <PropertyElement
         property={property}
         onPropertyChanged={onPropertyChanged}
       />
-    </div>
+    </Box>
   );
 }

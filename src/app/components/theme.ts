@@ -3,8 +3,14 @@ import { createTheme, Theme } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface Theme {
+    paletteExt: {
+      backgroundElevation: {
+        0: string;
+        1: string;
+        2: string;
+      };
+    };
     canvas: {
-      background: string;
       line: {
         default: string;
       };
@@ -12,8 +18,14 @@ declare module "@mui/material/styles" {
   }
   // allow configuration using `createTheme()`
   interface ThemeOptions {
+    paletteExt: {
+      backgroundElevation: {
+        0: string;
+        1: string;
+        2: string;
+      };
+    };
     canvas: {
-      background: string;
       line: {
         default: string;
       };
@@ -34,8 +46,14 @@ function createAppTheme(): Theme {
         disabled: "#333",
       },
     },
+    paletteExt: {
+      backgroundElevation: {
+        0: "#121212",
+        1: "#161616",
+        2: "#1D1D1D",
+      },
+    },
     canvas: {
-      background: "#111",
       line: { default: "#eee" },
     },
     components: {

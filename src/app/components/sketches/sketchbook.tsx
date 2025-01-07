@@ -9,6 +9,7 @@ import * as THREE from "three";
 import OrthographicSketchCamera from "../drawing/orthographic_camera";
 import SketchShapeElement from "../drawing/shape/sketch_shape_element";
 import PropertiesEditor from "../properties/editor";
+
 function getBoundingBox(sketch: Sketch, oversize = 0.1): BoundingBox {
   const sketchBoundingBox = sketch.getBoundingBox();
   const size = sketchBoundingBox.size().multiplyScalar(oversize);
@@ -19,17 +20,19 @@ function getBoundingBox(sketch: Sketch, oversize = 0.1): BoundingBox {
   );
 }
 
+type SketchBookProps = {
+  sketch: Sketch;
+  onPropertyChanged(arg0: Property): void;
+  onUpdate?: (shape: AnySketchShape) => void;
+  onUpdateEnd?: (shape: AnySketchShape) => void;
+};
+
 export default function SketchBook({
   sketch,
   onPropertyChanged,
   onUpdate,
   onUpdateEnd,
-}: {
-  sketch: Sketch;
-  onPropertyChanged: (arg0: Property) => void;
-  onUpdate?: (shape: AnySketchShape) => void;
-  onUpdateEnd?: (shape: AnySketchShape) => void;
-}) {
+}: SketchBookProps) {
   const theme = useTheme();
   const [sketchBounds, setSketchBounds] = useState(getBoundingBox(sketch, 0.1));
 
@@ -68,7 +71,7 @@ export default function SketchBook({
     >
       <Canvas
         frameloop="demand"
-        style={{ background: theme.canvas.background }}
+        style={{ background: theme.paletteExt.backgroundElevation[1] }}
       >
         <OrthographicSketchCamera
           position={sketchBounds.center().add(new THREE.Vector3(0, 0, 3))}
@@ -85,7 +88,12 @@ export default function SketchBook({
           />
         ))}
       </Canvas>
-      <div style={{ overflow: "auto" }}>
+      <div
+        style={{
+          overflow: "auto",
+          background: theme.paletteExt.backgroundElevation[2],
+        }}
+      >
         <PropertiesEditor
           property={getProperties()}
           onPropertyChanged={onPropertyChanged}
@@ -93,8 +101,4 @@ export default function SketchBook({
       </div>
     </Box>
   );
-}
-
-function timeout(delay: number): Promise<unknown> {
-  return new Promise((res) => setTimeout(res, delay));
 }

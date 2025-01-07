@@ -15,7 +15,6 @@ export default function AppLayout({ children }: AppLayoutProps) {
           width: "100%",
           height: "100%",
           margin: 0,
-          background: "#262b30",
         }}
       >
         <ThemeProvider theme={theme}>

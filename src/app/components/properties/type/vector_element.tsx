@@ -1,8 +1,10 @@
+import NumberInput from "@/components/properties/NumberInput";
 import {
   Vector2Property,
   Vector3Property,
   VectorProperty,
 } from "@/lib/property/types";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 export default function VectorElement({
@@ -59,15 +61,21 @@ export function Vector3Element({
 
   return (
     <>
-      <span>{property.getName()}</span>
-      <div>
-        <label>X</label>
-        <input type={"text"} value={property.value().x} onChange={onXChanged} />
-        <label>Y</label>
-        <input type={"text"} value={property.value().y} onChange={onYChanged} />
-        <label>Z</label>
-        <input type={"text"} value={property.value().z} onChange={onZChanged} />
-      </div>
+      <Typography>{property.getName()}</Typography>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "min-content 1fr",
+          gap: "4px 20px",
+        }}
+      >
+        <Typography>X</Typography>
+        <NumberInput onChange={onXChanged} value={property.value().x} />
+        <Typography>Y</Typography>
+        <NumberInput onChange={onYChanged} value={property.value().y} />
+        <Typography>Z</Typography>
+        <NumberInput onChange={onZChanged} value={property.value().z} />
+      </Box>
     </>
   );
 }
@@ -91,13 +99,19 @@ export function Vector2Element({
 
   return (
     <>
-      <span>{property.getName()}</span>
-      <div>
-        <label>X</label>
-        <input type={"text"} value={property.value().x} onChange={onXChanged} />
-        <label>Y</label>
-        <input type={"text"} value={property.value().y} onChange={onYChanged} />
-      </div>
+      <Typography>{property.getName()}</Typography>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "min-content 1fr",
+          gap: "4px 20px",
+        }}
+      >
+        <Typography>X</Typography>
+        <NumberInput onChange={onXChanged} value={property.value().x} />
+        <Typography>Y</Typography>
+        <NumberInput onChange={onYChanged} value={property.value().y} />
+      </Box>
     </>
   );
 }

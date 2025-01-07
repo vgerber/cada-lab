@@ -1,13 +1,15 @@
-import { Stack, Typography } from "@mui/material";
+"use client";
+import { Stack, Typography, useTheme } from "@mui/material";
 import Link from "next/link";
 import { registeredSketches } from "./sketches/registered_sketches";
 
 export default function Sidebar() {
+  const theme = useTheme();
   console.log(registeredSketches);
   return (
     <Stack
       sx={{
-        background: "#1b2024",
+        background: theme.paletteExt.backgroundElevation[0],
         minWidth: "300px",
         minHeight: 0,
         overflow: "hidden",
