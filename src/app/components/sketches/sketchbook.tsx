@@ -2,7 +2,7 @@
 import { BoundingBox } from "@/lib/drawing/shape/shape";
 import { AnySketchShape, Sketch } from "@/lib/drawing/sketch/sketch";
 import { Property, PropertyGroup } from "@/lib/property/types";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import * as THREE from "three";
@@ -30,6 +30,7 @@ export default function SketchBook({
   onUpdate?: (shape: AnySketchShape) => void;
   onUpdateEnd?: (shape: AnySketchShape) => void;
 }) {
+  const theme = useTheme();
   const [sketchBounds, setSketchBounds] = useState(getBoundingBox(sketch, 0.1));
 
   function getProperties(): PropertyGroup {
@@ -65,7 +66,10 @@ export default function SketchBook({
         overflow: "hidden",
       }}
     >
-      <Canvas frameloop="demand">
+      <Canvas
+        frameloop="demand"
+        style={{ background: theme.canvas.background }}
+      >
         <OrthographicSketchCamera
           position={sketchBounds.center().add(new THREE.Vector3(0, 0, 3))}
           sceneMin={new THREE.Vector2(sketchBounds.min.x, sketchBounds.min.y)}

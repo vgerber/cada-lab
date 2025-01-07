@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material";
 import { useThree } from "@react-three/fiber";
 import { useState } from "react";
 import * as THREE from "three";
@@ -12,6 +13,7 @@ export default function DragSphere({
   onDrag: (arg0: THREE.Vector3) => void;
   onDragEnd: () => void;
 }) {
+  const theme = useTheme();
   const [dragPosition, setDragPosition] = useState(position.clone());
 
   const dragBindings = useDrag(
@@ -42,7 +44,7 @@ export default function DragSphere({
       <meshBasicMaterial
         transparent
         opacity={hoverProps.isHovered ? 1 : 1}
-        color={"black"}
+        color={theme.canvas.line.default}
       />
     </mesh>
   );

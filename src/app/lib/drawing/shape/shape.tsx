@@ -10,8 +10,12 @@ export class BoundingBox {
     this.max = max;
   }
 
+  size(): THREE.Vector3 {
+    return this.max.clone().sub(this.min);
+  }
+
   center() {
-    return this.max.clone().sub(this.min).multiplyScalar(0.5);
+    return this.size().multiplyScalar(0.5).add(this.min);
   }
 }
 

@@ -1,4 +1,5 @@
 import { Line } from "@/lib/drawing/shape/2d/line";
+import { useTheme } from "@mui/material";
 import { extend, ReactThreeFiber } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -13,6 +14,7 @@ declare global {
 }
 
 export default function LineShapeElement({ line }: { line: Line }) {
+  const theme = useTheme();
   const geometry = new THREE.BufferGeometry().setFromPoints([line.a, line.b]);
 
   if (line.properties.dashedProperties) {
@@ -25,7 +27,7 @@ export default function LineShapeElement({ line }: { line: Line }) {
         >
           <lineDashedMaterial
             attach="material"
-            color={"#333"}
+            color={theme.canvas.line.default}
             linewidth={1}
             gapSize={dashProps.gapSize}
             dashSize={dashProps.dashSize}
@@ -37,7 +39,11 @@ export default function LineShapeElement({ line }: { line: Line }) {
     return (
       <group>
         <line_ geometry={geometry}>
-          <lineBasicMaterial attach="material" color={"#333"} linewidth={1} />
+          <lineBasicMaterial
+            attach="material"
+            color={theme.canvas.line.default}
+            linewidth={1}
+          />
         </line_>
       </group>
     );

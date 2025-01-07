@@ -1,6 +1,26 @@
 "use client";
 import { createTheme, Theme } from "@mui/material";
 
+declare module "@mui/material/styles" {
+  interface Theme {
+    canvas: {
+      background: string;
+      line: {
+        default: string;
+      };
+    };
+  }
+  // allow configuration using `createTheme()`
+  interface ThemeOptions {
+    canvas: {
+      background: string;
+      line: {
+        default: string;
+      };
+    };
+  }
+}
+
 function createAppTheme(): Theme {
   return createTheme({
     palette: {
@@ -13,6 +33,10 @@ function createAppTheme(): Theme {
         secondary: "#adb0b3",
         disabled: "#333",
       },
+    },
+    canvas: {
+      background: "#111",
+      line: { default: "#eee" },
     },
     components: {
       MuiTypography: {

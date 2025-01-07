@@ -1,7 +1,9 @@
 import { Circle } from "@/lib/drawing/shape/2d/circle";
+import { useTheme } from "@mui/material";
 import * as THREE from "three";
 
 export default function CircleShapeElement({ circle }: { circle: Circle }) {
+  const theme = useTheme();
   const lineGeometry = new THREE.BufferGeometry().setFromPoints(
     generateCircleLineStrip(circle),
   );
@@ -9,7 +11,11 @@ export default function CircleShapeElement({ circle }: { circle: Circle }) {
   return (
     <group position={circle.position}>
       <lineLoop geometry={lineGeometry}>
-        <lineBasicMaterial attach="material" color={"#333"} linewidth={1} />
+        <lineBasicMaterial
+          attach="material"
+          color={theme.canvas.line.default}
+          linewidth={1}
+        />
       </lineLoop>
     </group>
   );

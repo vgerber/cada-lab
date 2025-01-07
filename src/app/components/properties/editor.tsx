@@ -83,7 +83,7 @@ export default function PropertiesEditor({
   onPropertyChanged: (arg0: Property) => void;
 }) {
   return (
-    <div>
+    <div style={{ padding: "16px" }}>
       <PropertyElement
         property={property}
         onPropertyChanged={onPropertyChanged}
