@@ -19,7 +19,7 @@ export default function AppPage({ params }: AppPageProps) {
 
   const sketchPath = Object.keys(
     registeredSketches[sketchGroup].registrations,
-  ).find((sketchPath) => `${sketchGroup}/${sketchPath}`);
+  ).find((sketchPath) => `${sketchGroup}/${sketchPath}` === sketchId);
   if (!sketchPath) {
     return null;
   }

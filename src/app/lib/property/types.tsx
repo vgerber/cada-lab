@@ -20,12 +20,12 @@ export class PropertyGroup implements Property {
 
 export class BasicTypeProperty<BasicType> implements Property {
   protected name: string;
-  protected setter: (arg0: BasicType) => void;
+  protected setter: ((arg0: BasicType) => void) | undefined;
   protected getter: () => BasicType;
 
   constructor(
     name: string,
-    setter: (arg0: BasicType) => void,
+    setter: ((arg0: BasicType) => void) | undefined,
     getter: () => BasicType,
   ) {
     this.name = name;
@@ -41,7 +41,15 @@ export class BasicTypeProperty<BasicType> implements Property {
     return this.getter();
   }
 
+  get readonly() {
+    return this.setter === undefined;
+  }
+
   set(value: BasicType): void {
+    if (!this.setter) {
+      console.warn(`${this.name} is readonly`);
+      return;
+    }
     return this.setter(value);
   }
 }
@@ -54,7 +62,7 @@ export class NumberProperty extends BasicTypeProperty<number> {
 
   constructor(
     name: string,
-    setter: (arg0: number) => void,
+    setter: ((arg0: number) => void) | undefined,
     getter: () => number,
     min: number,
     max: number,
@@ -65,6 +73,11 @@ export class NumberProperty extends BasicTypeProperty<number> {
   }
 
   set(value: number): void {
+    if (!this.setter) {
+      console.warn(`${this.name} is readonly`);
+      return;
+    }
+
     value = Math.min(this.max, Math.max(this.min, value));
     this.setter(value);
   }

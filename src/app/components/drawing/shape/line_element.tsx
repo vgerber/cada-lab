@@ -1,6 +1,7 @@
 import { Line } from "@/lib/drawing/shape/2d/line";
 import { useTheme } from "@mui/material";
 import { extend, ReactThreeFiber } from "@react-three/fiber";
+import { observer } from "mobx-react";
 import * as THREE from "three";
 
 extend({ Line_: THREE.Line });
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-export default function LineShapeElement({ line }: { line: Line }) {
+export const LineShapeElement = observer(({ line }: { line: Line }) => {
   const theme = useTheme();
   const geometry = new THREE.BufferGeometry().setFromPoints([line.a, line.b]);
 
@@ -48,4 +49,4 @@ export default function LineShapeElement({ line }: { line: Line }) {
       </group>
     );
   }
-}
+});

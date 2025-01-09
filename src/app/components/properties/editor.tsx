@@ -7,8 +7,8 @@ import {
   Vector3Property,
 } from "@/lib/property/types";
 import { Box, Typography } from "@mui/material";
-import BooleanPropertyElement from "./type/boolean_element";
-import NumberPropertyElement from "./type/number_element";
+import { BooleanPropertyElement } from "./type/boolean_element";
+import { NumberPropertyElement } from "./type/number_element";
 import VectorElement from "./type/vector_element";
 
 function PropertyElement({

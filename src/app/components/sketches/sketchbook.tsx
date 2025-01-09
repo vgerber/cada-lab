@@ -1,4 +1,3 @@
-"use client";
 import { BoundingBox } from "@/lib/drawing/shape/shape";
 import { AnySketchShape, Sketch } from "@/lib/drawing/sketch/sketch";
 import { Property, PropertyGroup } from "@/lib/property/types";

@@ -5,6 +5,7 @@ import { DragPoint } from "@/lib/drawing/sketch/interaction";
 import { Sketch } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
 import { Property } from "@/lib/property/types";
+import { runInAction } from "mobx";
 import * as THREE from "three";
 import SketchBook from "../../sketchbook";
 
@@ -33,12 +34,16 @@ export default function CircleShape2d() {
     new DragPoint(
       circle2,
       (target) => target.position,
-      (target, position) => target.position.set(position.x, position.y, 0),
+      (target, position) =>
+        runInAction(
+          () =>
+            (target.position = new THREE.Vector3(position.x, position.y, 0)),
+        ),
     ),
   );
 
   const sketchLine = new SketchShape(
-    new Line("Test", new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0)),
+    new Line("Test", new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 2, 0)),
   );
 
   const sketch = new Sketch([

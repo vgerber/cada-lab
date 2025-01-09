@@ -1,5 +1,6 @@
+import CircleShape2d from "@/components/sketches/shape/2d/circle";
+import LineShape2d from "@/components/sketches/shape/2d/line";
 import { ReactNode } from "react";
-import CircleShape2d from "./shape/2d/circle";
 
 export type SketchRegistration = {
   name: string;
@@ -19,10 +20,10 @@ export const registeredSketches: Record<string, SketchRegistrationGroup> = {
         name: "Circle",
         component: <CircleShape2d />,
       },
-      // line: {
-      //   name: "Line",
-      //   component: <LineShape2d />,
-      // },
+      line: {
+        name: "Line",
+        component: <LineShape2d />,
+      },
     },
   },
 };

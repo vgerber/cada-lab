@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 import * as THREE from "three";
 import { PropertyGroup, Vector3Property } from "../../../property/types";
 import { BoundingBox, Shape } from "../shape";
@@ -21,6 +22,7 @@ export class Line implements Shape {
     this.name = name;
     this.a = a;
     this.b = b;
+    makeAutoObservable(this);
   }
 
   clone(): Line {

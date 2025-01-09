@@ -1,3 +1,4 @@
+import { makeAutoObservable } from "mobx";
 import * as THREE from "three";
 import {
   BooleanProperty,
@@ -35,9 +36,11 @@ export class Circle implements Shape {
       new THREE.Vector3(0, 0, 0),
       new THREE.Vector3(0, 0, 0),
     );
+    makeAutoObservable(this);
   }
 
   clone(): Circle {
+    console.log("Clone");
     return new Circle(
       this.name,
       this.position.clone(),
@@ -56,9 +59,7 @@ export class Circle implements Shape {
     return new PropertyGroup(this.name, [
       new BooleanProperty(
         "Points",
-        (e) => {
-          this.drawPoints = e;
-        },
+        (e) => (this.drawPoints = e),
         () => {
           return this.drawPoints;
         },
@@ -106,16 +107,8 @@ export class Circle implements Shape {
         },
         () => this.position,
       ),
-      new Vector3Property(
-        "AABB Max",
-        () => {},
-        () => this.boundingBox.max,
-      ),
-      new Vector3Property(
-        "AABB Min",
-        () => {},
-        () => this.boundingBox.min,
-      ),
+      new Vector3Property("AABB Max", undefined, () => this.boundingBox.max),
+      new Vector3Property("AABB Min", undefined, () => this.boundingBox.min),
     ]);
   }
 

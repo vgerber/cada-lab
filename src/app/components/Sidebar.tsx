@@ -5,7 +5,6 @@ import { registeredSketches } from "./sketches/registered_sketches";
 
 export default function Sidebar() {
   const theme = useTheme();
-  console.log(registeredSketches);
   return (
     <Stack
       sx={{
@@ -16,18 +15,19 @@ export default function Sidebar() {
       }}
     >
       <Typography
+        key={"title"}
         variant="h4"
         color="secondary"
         sx={{ whiteSpace: "nowrap", p: 2 }}
       >
         cadle-lab
       </Typography>
-      <Stack>
+      <Stack m={2}>
         {Object.keys(registeredSketches).map((groupPath) => {
           const group = registeredSketches[groupPath];
           return (
             <>
-              <Typography>{group.name}</Typography>
+              <Typography key={groupPath}>{group.name}</Typography>
               {Object.keys(group.registrations).map((sketchPath) => {
                 const sketch = group.registrations[sketchPath];
                 const href = `/explorer/${groupPath}/${sketchPath}`;

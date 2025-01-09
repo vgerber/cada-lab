@@ -1,25 +1,30 @@
 import { Circle } from "@/lib/drawing/shape/2d/circle";
 import { useTheme } from "@mui/material";
+import { observer } from "mobx-react";
 import * as THREE from "three";
 
-export default function CircleShapeElement({ circle }: { circle: Circle }) {
-  const theme = useTheme();
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(
-    generateCircleLineStrip(circle),
-  );
+type CircleShapeElementProps = {
+  circle: Circle;
+};
 
-  return (
-    <group position={circle.position}>
-      <lineLoop geometry={lineGeometry}>
+export const CircleShapeElement = observer(
+  ({ circle }: CircleShapeElementProps) => {
+    const theme = useTheme();
+    const lineGeometry = new THREE.BufferGeometry().setFromPoints(
+      generateCircleLineStrip(circle),
+    );
+
+    return (
+      <lineLoop geometry={lineGeometry} position={circle.position}>
         <lineBasicMaterial
           attach="material"
           color={theme.canvas.line.default}
           linewidth={1}
         />
       </lineLoop>
-    </group>
-  );
-}
+    );
+  },
+);
 
 function generateCircleLineStrip(circle: Circle): THREE.Vector3[] {
   if (circle.resolution === 0) {
@@ -41,7 +46,7 @@ function generateCircleLineStrip(circle: Circle): THREE.Vector3[] {
   const clampedStart = circle.circleStart % (Math.PI * 2);
   const clampedEnd = circle.circleEnd % (Math.PI * 2);
   if (Math.abs(clampedEnd - clampedStart) > 0.001) {
-    points.push(circle.position);
+    points.push(new THREE.Vector3(0, 0, 0));
   }
 
   return points;
