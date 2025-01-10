@@ -25,7 +25,7 @@ export default function Sidebar() {
         color="secondary"
         sx={{ whiteSpace: "nowrap", p: 2 }}
       >
-        cadle-lab
+        cada Lab
       </Typography>
       <Stack m={2} ml={4}>
         {Object.keys(registeredSketches).map((groupPath) => {
