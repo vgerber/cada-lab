@@ -13,6 +13,7 @@ declare module "@mui/material/styles" {
     canvas: {
       line: {
         default: string;
+        background: string;
       };
     };
   }
@@ -28,6 +29,7 @@ declare module "@mui/material/styles" {
     canvas: {
       line: {
         default: string;
+        background: string;
       };
     };
   }
@@ -54,7 +56,7 @@ function createAppTheme(): Theme {
       },
     },
     canvas: {
-      line: { default: "#eee" },
+      line: { default: "#eee", background: "#666" },
     },
     components: {
       MuiTypography: {

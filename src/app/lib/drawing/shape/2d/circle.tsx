@@ -16,7 +16,7 @@ export class Circle implements Shape {
   position: THREE.Vector3;
   radius: number;
   boundingBox: BoundingBox;
-  drawPoints: boolean = true;
+  drawPoints: boolean = false;
 
   constructor(
     name: string,

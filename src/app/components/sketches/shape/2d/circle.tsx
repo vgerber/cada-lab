@@ -1,6 +1,5 @@
 "use client";
 import { Circle } from "@/lib/drawing/shape/2d/circle";
-import { Line } from "@/lib/drawing/shape/2d/line";
 import { DragPoint } from "@/lib/drawing/sketch/interaction";
 import { Sketch } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
@@ -29,10 +28,10 @@ export default function CircleShape2d() {
 
   function onPropertyChanged(property: Property) {}
 
-  const sketchCircle2 = new SketchShape(circle2);
-  sketchCircle2.addInteractable(
+  const sketchCircle1 = new SketchShape(circle1);
+  sketchCircle1.addInteractable(
     new DragPoint(
-      circle2,
+      circle1,
       (target) => target.position,
       (target, position) =>
         runInAction(
@@ -42,15 +41,7 @@ export default function CircleShape2d() {
     ),
   );
 
-  const sketchLine = new SketchShape(
-    new Line("Test", new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 2, 0)),
-  );
-
-  const sketch = new Sketch([
-    new SketchShape(circle1),
-    sketchCircle2,
-    sketchLine,
-  ]);
+  const sketch = new Sketch([sketchCircle1, new SketchShape(circle2)]);
 
   return <SketchBook sketch={sketch} onPropertyChanged={onPropertyChanged} />;
 }

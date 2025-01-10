@@ -14,6 +14,13 @@ export const CircleShapeElement = observer(
       generateCircleLineStrip(circle),
     );
 
+    if (circle.drawPoints) {
+      return (
+        <points position={circle.position} geometry={lineGeometry}>
+          <pointsMaterial size={5} color={theme.canvas.line.default} />
+        </points>
+      );
+    }
     return (
       <lineLoop geometry={lineGeometry} position={circle.position}>
         <lineBasicMaterial

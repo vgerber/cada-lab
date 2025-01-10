@@ -14,14 +14,29 @@ export default function DragSphere({
   onDragEnd: () => void;
 }) {
   const theme = useTheme();
-  const [dragPosition, setDragPosition] = useState(position.clone());
+  const [dragPosition, setDragPosition] = useState<THREE.Vector3>(position);
+  const [dragStartPosition, setDragStartPosition] =
+    useState<THREE.Vector3 | null>(null);
+
+  const dragLineGeometry = dragStartPosition
+    ? new THREE.BufferGeometry().setFromPoints([
+        dragStartPosition,
+        dragPosition,
+      ])
+    : null;
 
   const dragBindings = useDrag(
     (newPosition) => {
       setDragPosition(newPosition.clone());
+      if (!dragStartPosition) {
+        setDragStartPosition(newPosition.clone());
+      }
       onDrag(newPosition);
     },
-    () => onDragEnd(),
+    () => {
+      setDragStartPosition(null);
+      onDragEnd();
+    },
   );
 
   const circleRadius = useCameraSphereRadius();
@@ -29,24 +44,55 @@ export default function DragSphere({
   const hoverProps = useHover();
 
   return (
-    <mesh
-      position={dragPosition}
-      {...dragBindings}
-      {...hoverProps.bindings}
-      scale={hoverProps.isHovered ? 2 : 1}
-    >
-      <sphereGeometry
-        args={[circleRadius, 16, 16]}
-        onUpdate={(self: any) => {
-          self.computeBoundingSphere();
-        }}
-      />
-      <meshBasicMaterial
-        transparent
-        opacity={hoverProps.isHovered ? 1 : 1}
-        color={theme.canvas.line.default}
-      />
-    </mesh>
+    <group>
+      <mesh
+        position={dragPosition}
+        {...dragBindings}
+        {...hoverProps.bindings}
+        scale={hoverProps.isHovered ? 2 : 1}
+      >
+        <sphereGeometry
+          args={[circleRadius, 16, 16]}
+          onUpdate={(self: any) => {
+            self.computeBoundingSphere();
+          }}
+        />
+        <meshBasicMaterial
+          transparent
+          opacity={hoverProps.isHovered ? 1 : 1}
+          color={theme.canvas.line.default}
+        />
+      </mesh>
+      {dragStartPosition && dragLineGeometry && (
+        <>
+          <mesh position={dragStartPosition} scale={1}>
+            <sphereGeometry
+              args={[circleRadius, 16, 16]}
+              onUpdate={(self: any) => {
+                self.computeBoundingSphere();
+              }}
+            />
+            <meshBasicMaterial
+              transparent
+              color={theme.canvas.line.background}
+            />
+          </mesh>
+          <line_
+            geometry={dragLineGeometry}
+            onUpdate={(line) => line.computeLineDistances()}
+          >
+            <lineDashedMaterial
+              attach="material"
+              color={theme.canvas.line.background}
+              opacity={0.5}
+              linewidth={1}
+              gapSize={circleRadius}
+              dashSize={circleRadius}
+            />
+          </line_>
+        </>
+      )}
+    </group>
   );
 }
 
