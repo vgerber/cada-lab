@@ -6,7 +6,7 @@ import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
 import { Property } from "@/lib/property/types";
 import { runInAction } from "mobx";
 import * as THREE from "three";
-import SketchBook from "../../sketchbook";
+import { SketchBook } from "../../sketchbook";
 
 export default function CircleShape2d() {
   const circle1 = new Circle(

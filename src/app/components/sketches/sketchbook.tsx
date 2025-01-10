@@ -3,9 +3,9 @@ import { AnySketchShape, Sketch } from "@/lib/drawing/sketch/sketch";
 import { Property, PropertyGroup } from "@/lib/property/types";
 import { Box, useTheme } from "@mui/material";
 import { Canvas } from "@react-three/fiber";
-import { useState } from "react";
-import * as THREE from "three";
-import OrthographicSketchCamera from "../drawing/orthographic_camera";
+import { runInAction } from "mobx";
+import { observer, useLocalObservable } from "mobx-react";
+import { OrthographicSketchCamera } from "../drawing/orthographic_camera";
 import SketchShapeElement from "../drawing/shape/sketch_shape_element";
 import PropertiesEditor from "../properties/editor";
 
@@ -26,78 +26,74 @@ type SketchBookProps = {
   onUpdateEnd?: (shape: AnySketchShape) => void;
 };
 
-export default function SketchBook({
-  sketch,
-  onPropertyChanged,
-  onUpdate,
-  onUpdateEnd,
-}: SketchBookProps) {
-  const theme = useTheme();
-  const [sketchBounds, setSketchBounds] = useState(getBoundingBox(sketch, 0.1));
+export const SketchBook = observer(
+  ({ sketch, onPropertyChanged, onUpdate, onUpdateEnd }: SketchBookProps) => {
+    const theme = useTheme();
 
-  function getProperties(): PropertyGroup {
-    return new PropertyGroup(
-      "Sketch",
-      sketch.shapes.map((shape) => shape.getShape().getProperties()),
-    );
-  }
+    const state = useLocalObservable(() => ({
+      sketchBounds: getBoundingBox(sketch, 0.1),
+    }));
 
-  function onShapeUpdateEnd(sketchShape: AnySketchShape) {
-    if (onUpdateEnd) {
-      onUpdateEnd(sketchShape);
+    function getProperties(): PropertyGroup {
+      return new PropertyGroup(
+        "Sketch",
+        sketch.shapes.map((shape) => shape.getShape().getProperties()),
+      );
     }
-    sketch.updateBoundingBox();
-    const newBounds = getBoundingBox(sketch, 0.1);
-    setSketchBounds(newBounds);
-  }
 
-  function onSketchUpdate(sketchShape: AnySketchShape) {
-    if (onUpdate) {
-      onUpdate(sketchShape);
+    function onShapeUpdateEnd(sketchShape: AnySketchShape) {
+      if (onUpdateEnd) {
+        onUpdateEnd(sketchShape);
+      }
+      sketch.updateBoundingBox();
+      const newBounds = getBoundingBox(sketch, 0.1);
+      runInAction(() => (state.sketchBounds = newBounds));
     }
-  }
 
-  return (
-    <Box
-      id="sketchBook"
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "1fr min-content",
-        minHeight: 0,
-        height: "100%",
-        overflow: "hidden",
-      }}
-    >
-      <Canvas
-        frameloop="demand"
-        style={{ background: theme.paletteExt.backgroundElevation[1] }}
-      >
-        <OrthographicSketchCamera
-          position={sketchBounds.center().add(new THREE.Vector3(0, 0, 3))}
-          sceneMin={new THREE.Vector2(sketchBounds.min.x, sketchBounds.min.y)}
-          sceneMax={new THREE.Vector2(sketchBounds.max.x, sketchBounds.max.y)}
-        />
-        <ambientLight intensity={0.7} />
-        {sketch.shapes.map((shape, shapeIndex) => (
-          <SketchShapeElement
-            key={shapeIndex}
-            sketchShape={shape}
-            onUpdate={onSketchUpdate}
-            onUpdateEnd={onShapeUpdateEnd}
-          />
-        ))}
-      </Canvas>
-      <div
-        style={{
-          overflow: "auto",
-          background: theme.paletteExt.backgroundElevation[2],
+    function onSketchUpdate(sketchShape: AnySketchShape) {
+      if (onUpdate) {
+        onUpdate(sketchShape);
+      }
+    }
+
+    return (
+      <Box
+        id="sketchBook"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr min-content",
+          minHeight: 0,
+          height: "100%",
+          overflow: "hidden",
         }}
       >
-        <PropertiesEditor
-          property={getProperties()}
-          onPropertyChanged={onPropertyChanged}
-        />
-      </div>
-    </Box>
-  );
-}
+        <Canvas
+          frameloop="demand"
+          style={{ background: theme.paletteExt.backgroundElevation[1] }}
+        >
+          <OrthographicSketchCamera sketchBounds={state.sketchBounds} />
+          <ambientLight intensity={0.7} />
+          {sketch.shapes.map((shape, shapeIndex) => (
+            <SketchShapeElement
+              key={shapeIndex}
+              sketchShape={shape}
+              onUpdate={onSketchUpdate}
+              onUpdateEnd={onShapeUpdateEnd}
+            />
+          ))}
+        </Canvas>
+        <div
+          style={{
+            overflow: "auto",
+            background: theme.paletteExt.backgroundElevation[2],
+          }}
+        >
+          <PropertiesEditor
+            property={getProperties()}
+            onPropertyChanged={onPropertyChanged}
+          />
+        </div>
+      </Box>
+    );
+  },
+);

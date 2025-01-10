@@ -5,7 +5,7 @@ import { Sketch } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
 import { runInAction } from "mobx";
 import * as THREE from "three";
-import SketchBook from "../../sketchbook";
+import { SketchBook } from "../../sketchbook";
 
 export default function LineShape2d() {
   return <SketchBook sketch={setupSketch()} onPropertyChanged={() => {}} />;
