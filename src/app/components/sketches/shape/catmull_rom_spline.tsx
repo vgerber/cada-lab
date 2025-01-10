@@ -1,4 +1,4 @@
-import SketchBook from "@/components/sketches/sketchbook";
+import { SketchBook } from "@/components/sketches/sketchbook";
 import { DashedLineProperties, Line } from "@/lib/drawing/shape/2d/line";
 import { CatmullRomSpline } from "@/lib/drawing/shape/curve/catmull_rom_spline";
 import { DragPoint } from "@/lib/drawing/sketch/interaction";

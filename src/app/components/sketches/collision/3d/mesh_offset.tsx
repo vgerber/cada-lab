@@ -1,4 +1,4 @@
-import SketchBook from "@/components/sketches/sketchbook";
+import { SketchBook } from "@/components/sketches/sketchbook";
 import { useState } from "react";
 import * as THREE from "three";
 import { MathUtils } from "three";

@@ -1,4 +1,4 @@
-import SketchBook from "@/components/sketches/sketchbook";
+import { SketchBook } from "@/components/sketches/sketchbook";
 import { DashedLineProperties, Line } from "@/lib/drawing/shape/2d/line";
 import { Point } from "@/lib/drawing/shape/2d/point";
 import { Shape } from "@/lib/drawing/shape/shape";
