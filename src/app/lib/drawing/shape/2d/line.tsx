@@ -1,3 +1,4 @@
+import { LineShapeElement } from "@/components/drawing/shape/line_element";
 import { makeAutoObservable } from "mobx";
 import * as THREE from "three";
 import { PropertyGroup, Vector3Property } from "../../../property/types";
@@ -76,5 +77,13 @@ export class Line implements Shape {
       this.a.clone().min(this.b),
       this.a.clone().max(this.b),
     );
+  }
+
+  getGeometry(): THREE.BufferGeometry {
+    return new THREE.BufferGeometry().setFromPoints([this.a, this.b]);
+  }
+
+  getSceneElement(): JSX.Element {
+    return <LineShapeElement line={this} />;
   }
 }

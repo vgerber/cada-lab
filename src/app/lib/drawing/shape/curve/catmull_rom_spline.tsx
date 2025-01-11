@@ -1,3 +1,5 @@
+import { useTheme } from "@mui/material";
+import { observer } from "mobx-react";
 import * as THREE from "three";
 import { PropertyGroup } from "../../../property/types";
 import { LineProperties } from "../2d/line";
@@ -15,7 +17,7 @@ export class CatmullRomSpline implements Shape {
   }
 
   clone(): CatmullRomSpline {
-    let spline = new CatmullRomSpline(
+    const spline = new CatmullRomSpline(
       this.name,
       this.points.map((p) => p.clone()),
     );
@@ -40,8 +42,8 @@ export class CatmullRomSpline implements Shape {
   }
 
   getBoundingBox(): BoundingBox {
-    let min = this.points[0].clone();
-    let max = this.points[0].clone();
+    const min = this.points[0].clone();
+    const max = this.points[0].clone();
     this.points.forEach((p) => {
       min.min(p);
       max.max(p);
@@ -52,6 +54,32 @@ export class CatmullRomSpline implements Shape {
   getCurvePoints(): THREE.Vector3[] {
     return generateCurve(this.points, this.alpha);
   }
+
+  getSceneElement(): JSX.Element {
+    const ElementObserver = observer(() => {
+      const geometry = new THREE.BufferGeometry().setFromPoints(
+        this.getCurvePoints(),
+      );
+      const theme = useTheme();
+      return (
+        <group>
+          <line_
+            geometry={geometry}
+            onUpdate={(line) => line.computeLineDistances()}
+          >
+            <lineDashedMaterial
+              attach="material"
+              color={theme.canvas.line.default}
+              linewidth={1}
+              gapSize={0}
+              dashSize={0}
+            />
+          </line_>
+        </group>
+      );
+    });
+    return <ElementObserver />;
+  }
 }
 
 function generateCurve(
@@ -59,7 +87,7 @@ function generateCurve(
   alpha: number,
   sectionPoints = 10,
 ) {
-  let distancesT: number[] = [];
+  const distancesT: number[] = [];
   points.forEach((point, pointIndex) => {
     if (pointIndex === 0) {
       distancesT.push(0);
@@ -71,7 +99,7 @@ function generateCurve(
     }
   });
 
-  let curvePoints: THREE.Vector3[] = [];
+  const curvePoints: THREE.Vector3[] = [];
 
   if (points.length > 3) {
     points.forEach((point, pointIndex) => {
@@ -79,19 +107,19 @@ function generateCurve(
       //  t0    t1   t-> t2    t3
       //     P0 --- P1 ---- P2 --- P3
       if (pointIndex > 1 && pointIndex < points.length - 1) {
-        let distanceT0 = distancesT[pointIndex - 2];
-        let distanceT1 = distancesT[pointIndex - 1];
-        let distanceT2 = distancesT[pointIndex];
-        let distanceT3 = distancesT[pointIndex + 1];
-        let p0 = points[pointIndex - 2];
-        let p1 = points[pointIndex - 1];
-        let p2 = points[pointIndex];
-        let p3 = points[pointIndex + 1];
+        const distanceT0 = distancesT[pointIndex - 2];
+        const distanceT1 = distancesT[pointIndex - 1];
+        const distanceT2 = distancesT[pointIndex];
+        const distanceT3 = distancesT[pointIndex + 1];
+        const p0 = points[pointIndex - 2];
+        const p1 = points[pointIndex - 1];
+        const p2 = points[pointIndex];
+        const p3 = points[pointIndex + 1];
 
-        let tSteps = (distanceT2 - distanceT1) / (sectionPoints - 1);
+        const tSteps = (distanceT2 - distanceT1) / (sectionPoints - 1);
         let distanceT = distanceT1;
         for (let cIndex = 0; cIndex < sectionPoints; cIndex++) {
-          let a1 = p0
+          const a1 = p0
             .clone()
             .multiplyScalar(
               (distanceT1 - distanceT) / (distanceT1 - distanceT0),
@@ -103,7 +131,7 @@ function generateCurve(
                 (distanceT - distanceT0) / (distanceT1 - distanceT0),
               ),
           );
-          let a2 = p1
+          const a2 = p1
             .clone()
             .multiplyScalar(
               (distanceT2 - distanceT) / (distanceT2 - distanceT1),
@@ -115,7 +143,7 @@ function generateCurve(
                 (distanceT - distanceT1) / (distanceT2 - distanceT1),
               ),
           );
-          let a3 = p2
+          const a3 = p2
             .clone()
             .multiplyScalar(
               (distanceT3 - distanceT) / (distanceT3 - distanceT2),
@@ -128,7 +156,7 @@ function generateCurve(
               ),
           );
 
-          let b1 = a1
+          const b1 = a1
             .clone()
             .multiplyScalar(
               (distanceT2 - distanceT) / (distanceT2 - distanceT0),
@@ -140,7 +168,7 @@ function generateCurve(
                 (distanceT - distanceT0) / (distanceT2 - distanceT0),
               ),
           );
-          let b2 = a2
+          const b2 = a2
             .clone()
             .multiplyScalar(
               (distanceT3 - distanceT) / (distanceT3 - distanceT1),
@@ -153,7 +181,7 @@ function generateCurve(
               ),
           );
 
-          let c = b1
+          const c = b1
             .clone()
             .multiplyScalar(
               (distanceT2 - distanceT) / (distanceT2 - distanceT1),

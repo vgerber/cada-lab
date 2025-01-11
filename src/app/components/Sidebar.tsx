@@ -14,7 +14,7 @@ export default function Sidebar() {
     <Stack
       sx={{
         background: theme.paletteExt.backgroundElevation[0],
-        minWidth: "200px",
+        minWidth: "230px",
         minHeight: 0,
         overflow: "hidden",
       }}
@@ -32,7 +32,11 @@ export default function Sidebar() {
           const group = registeredSketches[groupPath];
           return (
             <>
-              <Typography key={groupPath} variant="body1">
+              <Typography
+                key={groupPath}
+                variant="body1"
+                sx={{ marginTop: "0.4rem" }}
+              >
                 {group.name}
               </Typography>
               {Object.keys(group.registrations).map((sketchPath) => {
@@ -55,6 +59,7 @@ export default function Sidebar() {
                         ":hover": {
                           paddingLeft: "0.5rem",
                         },
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {sketch.name}

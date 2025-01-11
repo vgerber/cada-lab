@@ -1,3 +1,6 @@
+import { LineShapeElement } from "@/components/drawing/shape/line_element";
+import { makeAutoObservable } from "mobx";
+import { observer } from "mobx-react";
 import * as THREE from "three";
 import { PropertyGroup, Vector3Property } from "../../../property/types";
 import { BoundingBox, Shape } from "../shape";
@@ -20,6 +23,8 @@ export class Triangle implements Shape {
     this.a = a;
     this.b = b;
     this.c = c;
+
+    makeAutoObservable(this);
   }
 
   clone(): Triangle {
@@ -76,5 +81,29 @@ export class Triangle implements Shape {
       new Line("BC", this.b, this.c),
       new Line("CA", this.c, this.a),
     ];
+  }
+
+  getGeometry(): THREE.BufferGeometry {
+    return new THREE.BufferGeometry().setFromPoints([
+      this.a,
+      this.b,
+      this.b,
+      this.c,
+      this.c,
+      this.a,
+    ]);
+  }
+
+  getSceneElement(): JSX.Element {
+    const ElementObserver = observer(() => {
+      return (
+        <group>
+          <LineShapeElement line={new Line("A", this.a, this.b)} />
+          <LineShapeElement line={new Line("B", this.b, this.c)} />
+          <LineShapeElement line={new Line("C", this.c, this.a)} />
+        </group>
+      );
+    });
+    return <ElementObserver />;
   }
 }

@@ -16,8 +16,11 @@ export class SketchShape<ShapeType extends Shape> {
   sketchInteractables: SketchInteractable<any>[] = [];
   properties = new SketchShapeProperties();
 
-  constructor(shape: ShapeType) {
+  constructor(shape: ShapeType, interactables?: SketchInteractable<any>[]) {
     this.shape = shape;
+    if (interactables) {
+      this.sketchInteractables = interactables;
+    }
   }
 
   clone(): SketchShape<ShapeType> {

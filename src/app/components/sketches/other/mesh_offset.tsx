@@ -1,18 +1,16 @@
+"use client";
 import { SketchBook } from "@/components/sketches/sketchbook";
 import { useState } from "react";
 import * as THREE from "three";
 import { MathUtils } from "three";
-import {
-  DashedLineProperties,
-  Line,
-} from "../../../../lib/drawing/shape/2d/line";
-import { Point } from "../../../../lib/drawing/shape/2d/point";
-import { Shape } from "../../../../lib/drawing/shape/shape";
-import { DragPoint } from "../../../../lib/drawing/sketch/interaction";
-import { AnySketchShape, Sketch } from "../../../../lib/drawing/sketch/sketch";
-import { SketchShape } from "../../../../lib/drawing/sketch/sketch_shape";
+import { DashedLineProperties, Line } from "../../../lib/drawing/shape/2d/line";
+import { Point } from "../../../lib/drawing/shape/2d/point";
+import { Shape } from "../../../lib/drawing/shape/shape";
+import { DragPoint } from "../../../lib/drawing/sketch/interaction";
+import { AnySketchShape, Sketch } from "../../../lib/drawing/sketch/sketch";
+import { SketchShape } from "../../../lib/drawing/sketch/sketch_shape";
 
-export default function LinePointDistance() {
+export default function MeshOffset() {
   const [lineA, setLineA] = useState(
     new Line("Line A", new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 0)),
   );
@@ -32,9 +30,7 @@ export default function LinePointDistance() {
     (l) => l.b,
     (l, position) => l.b.set(position.x, position.y, 0),
   );
-  const sketchLineA = new SketchShape(lineA);
-  sketchLineA.addInteractable(lineAADrag);
-  sketchLineA.addInteractable(lineABDrag);
+  const sketchLineA = new SketchShape(lineA, [lineAADrag, lineABDrag]);
 
   lineB.a = lineA.a;
   const lineBBDrag = new DragPoint(

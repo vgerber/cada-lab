@@ -1,3 +1,4 @@
+import { useTheme } from "@mui/material";
 import * as THREE from "three";
 import { PropertyGroup, Vector3Property } from "../../../property/types";
 import { BoundingBox, Shape } from "../shape";
@@ -42,5 +43,20 @@ export class Point implements Shape {
 
   getBoundingBox(): BoundingBox {
     return new BoundingBox(this.position.clone(), this.position.clone());
+  }
+
+  getGeometry(): THREE.BufferGeometry {
+    return new THREE.BufferGeometry().setFromPoints([this.position]);
+  }
+
+  getSceneElement(): JSX.Element {
+    const theme = useTheme();
+    return (
+      <group>
+        <points geometry={this.getGeometry()}>
+          <pointsMaterial size={5} color={theme.canvas.line.default} />
+        </points>
+      </group>
+    );
   }
 }

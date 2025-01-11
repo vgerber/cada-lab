@@ -27,4 +27,6 @@ export interface Shape {
   getName(): string;
 
   clone(): Shape;
+
+  getSceneElement(): JSX.Element;
 }

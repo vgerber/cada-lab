@@ -1,3 +1,6 @@
+import { LineShapeElement } from "@/components/drawing/shape/line_element";
+import { makeAutoObservable } from "mobx";
+import { observer } from "mobx-react";
 import * as THREE from "three";
 import {
   PropertyGroup,
@@ -25,6 +28,7 @@ export class Rectangle implements Shape {
     );
     this.points = [];
     this.generate();
+    makeAutoObservable(this);
   }
 
   clone(): Rectangle {
@@ -75,6 +79,11 @@ export class Rectangle implements Shape {
     );
   }
 
+  setSize(size: THREE.Vector2) {
+    this.size = size;
+    this.generate();
+  }
+
   private generate() {
     this.points = [
       new THREE.Vector3(-0.5 * this.size.x, -0.5 * this.size.y, 0),
@@ -89,5 +98,43 @@ export class Rectangle implements Shape {
     );
     this.boundingBox.min.add(this.position);
     this.boundingBox.max.add(this.position);
+  }
+
+  getGeometry(): THREE.BufferGeometry {
+    return new THREE.BufferGeometry().setFromPoints([
+      this.points[0],
+      this.points[1],
+
+      this.points[1],
+      this.points[2],
+
+      this.points[2],
+      this.points[3],
+
+      this.points[3],
+      this.points[0],
+    ]);
+  }
+
+  getSceneElement(): JSX.Element {
+    const ElementObserver = observer(() => {
+      return (
+        <group>
+          <LineShapeElement
+            line={new Line("A", this.points[0], this.points[1])}
+          />
+          <LineShapeElement
+            line={new Line("B", this.points[1], this.points[2])}
+          />
+          <LineShapeElement
+            line={new Line("C", this.points[2], this.points[3])}
+          />
+          <LineShapeElement
+            line={new Line("D", this.points[3], this.points[0])}
+          />
+        </group>
+      );
+    });
+    return <ElementObserver />;
   }
 }

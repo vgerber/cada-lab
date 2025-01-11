@@ -3,7 +3,6 @@ import { AnySketchShape } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
 import * as THREE from "three";
 import InteractableElement from "./interaction/interactable_element";
-import ShapeElement from "./shape_element";
 
 export default function SketchShapeElement({
   sketchShape,
@@ -36,7 +35,7 @@ export default function SketchShapeElement({
           onDragEnd={onDragEnd}
         />
       ))}
-      <ShapeElement shape={sketchShape.shape} />
+      {(sketchShape.shape as Shape).getSceneElement()}
     </>
   );
 }

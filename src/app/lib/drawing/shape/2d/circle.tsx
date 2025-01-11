@@ -1,3 +1,4 @@
+import { CircleShapeElement } from "@/components/drawing/shape/circle_element";
 import { makeAutoObservable } from "mobx";
 import * as THREE from "three";
 import {
@@ -127,5 +128,9 @@ export class Circle implements Shape {
     const min = this.position.clone().sub(radiusVec);
     const max = this.position.clone().add(radiusVec);
     return new BoundingBox(min, max);
+  }
+
+  getSceneElement(): JSX.Element {
+    return <CircleShapeElement circle={this} />;
   }
 }

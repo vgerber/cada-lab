@@ -1,3 +1,4 @@
+"use client";
 import { SketchBook } from "@/components/sketches/sketchbook";
 import { DashedLineProperties, Line } from "@/lib/drawing/shape/2d/line";
 import { CatmullRomSpline } from "@/lib/drawing/shape/curve/catmull_rom_spline";
@@ -7,7 +8,7 @@ import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
 import { useState } from "react";
 import * as THREE from "three";
 
-export default function ShapeCatmullRomSpline() {
+export default function CatmullRomSplineSketch() {
   const [spline, setSpline] = useState(
     new CatmullRomSpline("CRS", [
       new THREE.Vector3(0, 1, 0),
@@ -50,16 +51,19 @@ export default function ShapeCatmullRomSpline() {
     (p, position) => p.set(position.x, position.y, 0),
   );
 
-  const sketchLine = new SketchShape(spline);
-  sketchLine.addInteractable(lineP0Drag);
-  sketchLine.addInteractable(lineP1Drag);
-  sketchLine.addInteractable(lineP2Drag);
-  sketchLine.addInteractable(lineP3Drag);
-  sketchLine.addInteractable(lineP4Drag);
-  sketchLine.addInteractable(lineP5Drag);
+  const sketchLine = new SketchShape(spline, [
+    lineP0Drag,
+    lineP1Drag,
+    lineP2Drag,
+    lineP3Drag,
+    lineP4Drag,
+    lineP5Drag,
+  ]);
 
   const line0 = new Line("P0", spline.points[0], spline.points[1]);
   line0.properties.dashedProperties = new DashedLineProperties();
+  line0.properties.dashedProperties.gapSize = 0.1;
+  line0.properties.dashedProperties.dashSize = 0.1;
   const line1 = new Line(
     "P1",
     spline.points[spline.points.length - 2],
