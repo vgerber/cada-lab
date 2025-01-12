@@ -57,15 +57,15 @@ export class BasicTypeProperty<BasicType> implements Property {
 export class BooleanProperty extends BasicTypeProperty<boolean> {}
 
 export class NumberProperty extends BasicTypeProperty<number> {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
 
   constructor(
     name: string,
     setter: ((arg0: number) => void) | undefined,
     getter: () => number,
-    min: number,
-    max: number,
+    min?: number,
+    max?: number,
   ) {
     super(name, setter, getter);
     this.min = min;
@@ -78,7 +78,51 @@ export class NumberProperty extends BasicTypeProperty<number> {
       return;
     }
 
-    value = Math.min(this.max, Math.max(this.min, value));
+    if (this.max) {
+      value = Math.min(this.max, value);
+    }
+
+    if (this.min) {
+      value = Math.max(this.min, value);
+    }
+
+    this.setter(value);
+  }
+}
+
+export class NumberRangeProperty extends BasicTypeProperty<number> {
+  min: number;
+  max: number;
+  step: number;
+
+  constructor(
+    name: string,
+    setter: ((arg0: number) => void) | undefined,
+    getter: () => number,
+    min: number,
+    max: number,
+    step: number,
+  ) {
+    super(name, setter, getter);
+    this.min = min;
+    this.max = max;
+    this.step = step;
+  }
+
+  set(value: number): void {
+    if (!this.setter) {
+      console.warn(`${this.name} is readonly`);
+      return;
+    }
+
+    if (this.max) {
+      value = Math.min(this.max, value);
+    }
+
+    if (this.min) {
+      value = Math.max(this.min, value);
+    }
+
     this.setter(value);
   }
 }

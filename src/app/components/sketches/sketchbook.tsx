@@ -21,13 +21,12 @@ function getBoundingBox(sketch: Sketch, oversize = 0.1): BoundingBox {
 
 type SketchBookProps = {
   sketch: Sketch;
-  onPropertyChanged(arg0: Property): void;
   onUpdate?: (shape: AnySketchShape) => void;
   onUpdateEnd?: (shape: AnySketchShape) => void;
 };
 
 export const SketchBook = observer(
-  ({ sketch, onPropertyChanged, onUpdate, onUpdateEnd }: SketchBookProps) => {
+  ({ sketch, onUpdate, onUpdateEnd }: SketchBookProps) => {
     const theme = useTheme();
 
     const state = useLocalObservable(() => ({
@@ -88,10 +87,7 @@ export const SketchBook = observer(
             background: theme.paletteExt.backgroundElevation[2],
           }}
         >
-          <PropertiesEditor
-            property={getProperties()}
-            onPropertyChanged={onPropertyChanged}
-          />
+          <PropertiesEditor property={getProperties()} />
         </div>
       </Box>
     );

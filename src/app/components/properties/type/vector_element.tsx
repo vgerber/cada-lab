@@ -10,25 +10,13 @@ import React from "react";
 
 export default function VectorElement({
   property,
-  onPropertyChanged,
 }: {
   property: VectorProperty;
-  onPropertyChanged: (arg0: VectorProperty) => void;
 }) {
   if (property instanceof Vector2Property) {
-    return (
-      <Vector2Element
-        property={property}
-        onPropertyChanged={onPropertyChanged}
-      />
-    );
+    return <Vector2Element property={property} />;
   } else if (property instanceof Vector3Property) {
-    return (
-      <Vector3Element
-        property={property}
-        onPropertyChanged={onPropertyChanged}
-      />
-    );
+    return <Vector3Element property={property} />;
   }
   return <span>Unknown vector type</span>;
 }
@@ -39,26 +27,17 @@ function parseFloat(number: string): number {
 }
 
 export const Vector3Element = observer(
-  ({
-    property,
-    onPropertyChanged,
-  }: {
-    property: Vector3Property;
-    onPropertyChanged: (arg0: Vector3Property) => void;
-  }) => {
+  ({ property }: { property: Vector3Property }) => {
     function onXChanged(e: React.ChangeEvent<HTMLInputElement>) {
       property.set(property.value().clone().setX(parseFloat(e.target.value)));
-      onPropertyChanged(property);
     }
 
     function onYChanged(e: React.ChangeEvent<HTMLInputElement>) {
       property.set(property.value().clone().setY(parseFloat(e.target.value)));
-      onPropertyChanged(property);
     }
 
     function onZChanged(e: React.ChangeEvent<HTMLInputElement>) {
       property.set(property.value().clone().setZ(parseFloat(e.target.value)));
-      onPropertyChanged(property);
     }
 
     return (
@@ -96,21 +75,13 @@ export const Vector3Element = observer(
 );
 
 export const Vector2Element = observer(
-  ({
-    property,
-    onPropertyChanged,
-  }: {
-    property: Vector2Property;
-    onPropertyChanged: (arg0: Vector2Property) => void;
-  }) => {
+  ({ property }: { property: Vector2Property }) => {
     function onXChanged(e: React.ChangeEvent<HTMLInputElement>) {
       property.set(property.value().setX(parseFloat(e.target.value)));
-      onPropertyChanged(property);
     }
 
     function onYChanged(e: React.ChangeEvent<HTMLInputElement>) {
       property.set(property.value().setY(parseFloat(e.target.value)));
-      onPropertyChanged(property);
     }
 
     return (

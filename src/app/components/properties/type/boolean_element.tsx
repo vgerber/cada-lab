@@ -3,16 +3,9 @@ import { Box, Checkbox, Typography } from "@mui/material";
 import { observer } from "mobx-react";
 
 export const BooleanPropertyElement = observer(
-  ({
-    property,
-    onPropertyChanged,
-  }: {
-    property: BooleanProperty;
-    onPropertyChanged: (arg0: BooleanProperty) => void;
-  }) => {
+  ({ property }: { property: BooleanProperty }) => {
     function onCheckboxChanged(e: React.ChangeEvent<HTMLInputElement>) {
       property.set(e.target.checked);
-      onPropertyChanged(property);
     }
 
     return (

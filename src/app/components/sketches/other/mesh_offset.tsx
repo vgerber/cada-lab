@@ -132,7 +132,6 @@ export default function MeshOffset() {
   return (
     <SketchBook
       sketch={new Sketch(shapes)}
-      onPropertyChanged={() => {}}
       onUpdate={(sketchShape) => onUpdateShape(sketchShape)}
     />
   );

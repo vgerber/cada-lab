@@ -4,6 +4,7 @@ import * as THREE from "three";
 import {
   BooleanProperty,
   NumberProperty,
+  NumberRangeProperty,
   PropertyGroup,
   Vector3Property,
 } from "../../../property/types";
@@ -65,7 +66,7 @@ export class Circle implements Shape {
           return this.drawPoints;
         },
       ),
-      new NumberProperty(
+      new NumberRangeProperty(
         "Start",
         (e) => {
           this.setCircleStart(e, true);
@@ -73,8 +74,9 @@ export class Circle implements Shape {
         () => THREE.MathUtils.radToDeg(this.circleStart),
         0,
         360,
+        1,
       ),
-      new NumberProperty(
+      new NumberRangeProperty(
         "End",
         (e) => {
           this.setCircleEnd(e, true);
@@ -82,6 +84,7 @@ export class Circle implements Shape {
         () => THREE.MathUtils.radToDeg(this.circleEnd),
         0,
         360,
+        1,
       ),
       new NumberProperty(
         "Radius",
@@ -90,7 +93,6 @@ export class Circle implements Shape {
         },
         () => this.radius,
         0,
-        Number.MAX_VALUE,
       ),
       new NumberProperty(
         "Resolution",
@@ -99,7 +101,6 @@ export class Circle implements Shape {
         },
         () => this.resolution,
         3,
-        Number.MAX_VALUE,
       ),
       new Vector3Property(
         "Position",
