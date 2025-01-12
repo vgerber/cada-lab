@@ -2,14 +2,12 @@ import { useTheme } from "@mui/material";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import { PropertyGroup } from "../../../property/types";
-import { LineProperties } from "../2d/line";
 import { BoundingBox, Shape } from "../shape";
 
 export class CatmullRomSpline implements Shape {
   name: string;
   points: THREE.Vector3[] = [];
   alpha: number = 0.5;
-  properties: LineProperties = new LineProperties();
 
   constructor(name: string, points: THREE.Vector3[]) {
     this.name = name;

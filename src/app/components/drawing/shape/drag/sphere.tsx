@@ -1,5 +1,5 @@
+import { useCameraSphereRadius } from "@/components/useCameraSphereRadius";
 import { useTheme } from "@mui/material";
-import { useThree } from "@react-three/fiber";
 import { useState } from "react";
 import * as THREE from "three";
 import { useDrag, useHover } from "../../util";
@@ -67,7 +67,7 @@ export default function DragSphere({
         <>
           <mesh position={dragStartPosition} scale={1}>
             <sphereGeometry
-              args={[circleRadius, 16, 16]}
+              args={[circleRadius * 0.5, 16, 16]}
               onUpdate={(self: any) => {
                 self.computeBoundingSphere();
               }}
@@ -94,18 +94,4 @@ export default function DragSphere({
       )}
     </group>
   );
-}
-
-function useCameraSphereRadius(): number {
-  const { camera } = useThree();
-
-  let sphereRadius = 0.005;
-  if (camera instanceof THREE.OrthographicCamera) {
-    const width = camera.right - camera.left;
-    const height = camera.top - camera.bottom;
-    const maxViewportSize = Math.max(width, height);
-    sphereRadius = 0.005 * maxViewportSize;
-  }
-
-  return sphereRadius;
 }

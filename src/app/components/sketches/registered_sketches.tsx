@@ -1,9 +1,9 @@
-import MeshOffset from "@/components/sketches/other/mesh_offset";
+import { MeshOffset } from "@/components/sketches/other/mesh_offset";
 import CircleShape2d from "@/components/sketches/shape/2d/circle";
 import LineShape2d from "@/components/sketches/shape/2d/line";
 import RectangleShape2d from "@/components/sketches/shape/2d/rect";
 import TriangleShape2d from "@/components/sketches/shape/2d/triangle";
-import CatmullRomSplineSketch from "@/components/sketches/shape/catmull_rom_spline";
+import { CatmullRomSplineSketch } from "@/components/sketches/shape/catmull_rom_spline";
 import { ReactNode } from "react";
 
 export type SketchRegistration = {

@@ -9,20 +9,26 @@ export class DashedLineProperties {
   dashSize = 0.01;
 }
 
-export class LineProperties {
-  dashedProperties: DashedLineProperties | null = null;
-}
+export type LineProperties = {
+  construction?: boolean;
+};
 
 export class Line implements Shape {
   name: string;
   a: THREE.Vector3;
   b: THREE.Vector3;
-  properties = new LineProperties();
+  properties: LineProperties;
 
-  constructor(name: string, a: THREE.Vector3, b: THREE.Vector3) {
+  constructor(
+    name: string,
+    a: THREE.Vector3,
+    b: THREE.Vector3,
+    properties?: LineProperties,
+  ) {
     this.name = name;
     this.a = a;
     this.b = b;
+    this.properties = properties ? properties : {};
     makeAutoObservable(this);
   }
 

@@ -1,3 +1,4 @@
+import { useCameraSphereRadius } from "@/components/useCameraSphereRadius";
 import { Line } from "@/lib/drawing/shape/2d/line";
 import { useTheme } from "@mui/material";
 import { extend, ReactThreeFiber } from "@react-three/fiber";
@@ -17,36 +18,35 @@ declare global {
 export const LineShapeElement = observer(({ line }: { line: Line }) => {
   const theme = useTheme();
   const geometry = new THREE.BufferGeometry().setFromPoints([line.a, line.b]);
+  const circleRadius = useCameraSphereRadius();
 
-  if (line.properties.dashedProperties) {
-    const dashProps = line.properties.dashedProperties;
+  if (line.properties.construction) {
     return (
-      <group>
-        <line_
-          geometry={geometry}
-          onUpdate={(line) => line.computeLineDistances()}
-        >
-          <lineDashedMaterial
-            attach="material"
-            color={theme.canvas.line.default}
-            linewidth={1}
-            gapSize={dashProps.gapSize}
-            dashSize={dashProps.dashSize}
-          />
-        </line_>
-      </group>
-    );
-  } else {
-    return (
-      <group>
-        <line_ geometry={geometry}>
-          <lineBasicMaterial
-            attach="material"
-            color={theme.canvas.line.default}
-            linewidth={1}
-          />
-        </line_>
-      </group>
+      <line_
+        geometry={geometry}
+        onUpdate={(line) => line.computeLineDistances()}
+      >
+        <lineDashedMaterial
+          attach="material"
+          color={theme.canvas.line.background}
+          opacity={0.5}
+          linewidth={1}
+          gapSize={circleRadius}
+          dashSize={circleRadius}
+        />
+      </line_>
     );
   }
+
+  return (
+    <group>
+      <line_ geometry={geometry}>
+        <lineBasicMaterial
+          attach="material"
+          color={theme.canvas.line.default}
+          linewidth={1}
+        />
+      </line_>
+    </group>
+  );
 });
