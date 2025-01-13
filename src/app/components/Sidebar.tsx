@@ -8,7 +8,9 @@ export default function Sidebar() {
   const theme = useTheme();
   const [activeHref, setActiveHref] = useState("");
 
-  useEffect(() => setActiveHref(window.location.pathname), []);
+  useEffect(() => {
+    setActiveHref(window.location.pathname);
+  }, []);
 
   return (
     <Stack
@@ -52,7 +54,8 @@ export default function Sidebar() {
                     <Typography
                       sx={{
                         color:
-                          href === activeHref
+                          `${process.env.NEXT_PUBLIC_PATH_PREFIX}${href}` ===
+                          activeHref
                             ? theme.palette.primary.main
                             : theme.palette.text.secondary,
                         paddingLeft: "0.4rem",

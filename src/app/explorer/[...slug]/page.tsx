@@ -25,7 +25,6 @@ export default function AppPage({ params }: AppPageProps) {
   }
 
   const sketch = registeredSketches[sketchGroup].registrations[sketchPath];
-  console.log(sketch);
 
   return sketch.component;
 }
