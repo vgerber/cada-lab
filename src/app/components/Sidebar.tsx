@@ -10,6 +10,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     setActiveHref(window.location.pathname);
+    console.log("Active href", window.location.pathname);
   }, []);
 
   return (
@@ -44,6 +45,7 @@ export default function Sidebar() {
               {Object.keys(group.registrations).map((sketchPath) => {
                 const sketch = group.registrations[sketchPath];
                 const href = `/explorer/${groupPath}/${sketchPath}`;
+                console.log(`${process.env.NEXT_PUBLIC_PATH_PREFIX}${href}`);
                 return (
                   <Link
                     key={href}
