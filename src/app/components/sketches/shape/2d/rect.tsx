@@ -35,5 +35,5 @@ export default function RectangleShape2d() {
 
   const sketch = new Sketch([rectSketchShape]);
 
-  return <SketchBook sketch={sketch} onPropertyChanged={() => {}} />;
+  return <SketchBook sketch={sketch} />;
 }

@@ -8,7 +8,7 @@ import * as THREE from "three";
 import { SketchBook } from "../../sketchbook";
 
 export default function LineShape2d() {
-  return <SketchBook sketch={setupSketch()} onPropertyChanged={() => {}} />;
+  return <SketchBook sketch={setupSketch()} />;
 }
 
 function setupSketch(): Sketch {

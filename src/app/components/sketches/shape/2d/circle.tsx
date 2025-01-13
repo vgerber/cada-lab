@@ -3,7 +3,6 @@ import { Circle } from "@/lib/drawing/shape/2d/circle";
 import { DragPoint } from "@/lib/drawing/sketch/interaction";
 import { Sketch } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
-import { Property } from "@/lib/property/types";
 import { runInAction } from "mobx";
 import * as THREE from "three";
 import { SketchBook } from "../../sketchbook";
@@ -26,8 +25,6 @@ export default function CircleShape2d() {
     50,
   );
 
-  function onPropertyChanged(property: Property) {}
-
   const sketchCircle1 = new SketchShape(circle1);
   sketchCircle1.addInteractable(
     new DragPoint(
@@ -43,5 +40,5 @@ export default function CircleShape2d() {
 
   const sketch = new Sketch([sketchCircle1, new SketchShape(circle2)]);
 
-  return <SketchBook sketch={sketch} onPropertyChanged={onPropertyChanged} />;
+  return <SketchBook sketch={sketch} />;
 }

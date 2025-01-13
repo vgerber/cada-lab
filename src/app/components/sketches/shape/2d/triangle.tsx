@@ -38,5 +38,5 @@ export default function TriangleShape2d() {
     new SketchShape(triangle, [triangleADrag, triangleBDrag, triangleCDrag]),
   ]);
 
-  return <SketchBook sketch={sketch} onPropertyChanged={() => {}} />;
+  return <SketchBook sketch={sketch} />;
 }
