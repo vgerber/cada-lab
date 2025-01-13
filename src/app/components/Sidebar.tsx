@@ -1,17 +1,13 @@
 "use client";
 import { Stack, Typography, useTheme } from "@mui/material";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { registeredSketches } from "./sketches/registered_sketches";
 
 export default function Sidebar() {
   const theme = useTheme();
-  const [activeHref, setActiveHref] = useState("");
-
-  useEffect(() => {
-    setActiveHref(window.location.pathname);
-    console.log("Active href", window.location.pathname);
-  });
+  const pathName = usePathname();
+  console.log("ActivePath", pathName);
 
   return (
     <Stack
@@ -45,19 +41,17 @@ export default function Sidebar() {
               {Object.keys(group.registrations).map((sketchPath) => {
                 const sketch = group.registrations[sketchPath];
                 const href = `/explorer/${groupPath}/${sketchPath}`;
-                console.log(`${process.env.NEXT_PUBLIC_PATH_PREFIX}${href}`);
+                console.log(href);
                 return (
                   <Link
                     key={href}
                     href={href}
                     style={{ textDecoration: "none", marginTop: "0.4rem" }}
-                    onClick={() => setActiveHref(href)}
                   >
                     <Typography
                       sx={{
                         color:
-                          `${process.env.NEXT_PUBLIC_PATH_PREFIX}${href}` ===
-                          activeHref
+                          href === pathName
                             ? theme.palette.primary.main
                             : theme.palette.text.secondary,
                         paddingLeft: "0.4rem",
