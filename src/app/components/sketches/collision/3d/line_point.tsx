@@ -1,5 +1,5 @@
 import { SketchBook } from "@/components/sketches/sketchbook";
-import { DashedLineProperties, Line } from "@/lib/drawing/shape/2d/line";
+import { Line } from "@/lib/drawing/shape/2d/line";
 import { Point } from "@/lib/drawing/shape/2d/point";
 import { Shape } from "@/lib/drawing/shape/shape";
 import { DragPoint } from "@/lib/drawing/sketch/interaction";
@@ -24,7 +24,6 @@ export default function LinePointDistance() {
     closestPoint.position,
     point.position,
   );
-  closestPointLine.properties.dashedProperties = new DashedLineProperties();
 
   const lineADrag = new DragPoint(
     line,
@@ -69,7 +68,6 @@ export default function LinePointDistance() {
           new SketchShape(closestPointLine),
         ])
       }
-      onPropertyChanged={() => {}}
       onUpdate={(sketchShape) => onUpdateShape(sketchShape)}
     />
   );
