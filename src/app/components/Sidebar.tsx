@@ -7,7 +7,6 @@ import { registeredSketches } from "./sketches/registered_sketches";
 export default function Sidebar() {
   const theme = useTheme();
   const pathName = usePathname();
-  console.log("ActivePath", pathName);
 
   return (
     <Stack
@@ -41,7 +40,6 @@ export default function Sidebar() {
               {Object.keys(group.registrations).map((sketchPath) => {
                 const sketch = group.registrations[sketchPath];
                 const href = `/explorer/${groupPath}/${sketchPath}`;
-                console.log(href);
                 return (
                   <Link
                     key={href}
