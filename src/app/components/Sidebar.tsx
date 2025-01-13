@@ -11,7 +11,7 @@ export default function Sidebar() {
   useEffect(() => {
     setActiveHref(window.location.pathname);
     console.log("Active href", window.location.pathname);
-  }, []);
+  });
 
   return (
     <Stack
