@@ -1,4 +1,5 @@
 import { useTheme } from "@mui/material";
+import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as THREE from "three";
 import { PropertyGroup } from "../../../property/types";
@@ -6,12 +7,19 @@ import { BoundingBox, Shape } from "../shape";
 
 export class CatmullRomSpline implements Shape {
   name: string;
-  points: THREE.Vector3[] = [];
+  private points: THREE.Vector3[] = [];
   alpha: number = 0.5;
+  bakedPoints: THREE.BufferGeometry = new THREE.BufferGeometry();
+  bakedBoundingBox: BoundingBox = new BoundingBox(
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(0, 0, 0),
+  );
 
   constructor(name: string, points: THREE.Vector3[]) {
     this.name = name;
     this.points = points;
+    this.bake();
+    makeAutoObservable(this);
   }
 
   clone(): CatmullRomSpline {
@@ -27,12 +35,34 @@ export class CatmullRomSpline implements Shape {
     return this.name;
   }
 
-  length(): number {
-    return 0;
+  setPoint(pointIndex: number, point: THREE.Vector3) {
+    this.points[pointIndex] = point;
+    this.bake();
   }
 
-  closestPoint(p: THREE.Vector3): THREE.Vector3 {
-    return new THREE.Vector3(0, 0, 0);
+  getPoint(pointIndex: number): THREE.Vector3 | undefined {
+    return this.points[pointIndex];
+  }
+
+  get pointCount() {
+    return this.points.length;
+  }
+
+  bake() {
+    this.bakedPoints = new THREE.BufferGeometry().setFromPoints(
+      generateCurve(this.points, this.alpha),
+    );
+    this.bakedPoints.computeBoundingBox();
+
+    // update bounding box
+    const min = this.points[0].clone();
+    const max = this.points[0].clone();
+    this.points.forEach((p) => {
+      min.min(p);
+      max.max(p);
+    });
+
+    this.bakedBoundingBox = new BoundingBox(min, max);
   }
 
   getProperties(): PropertyGroup {
@@ -55,14 +85,12 @@ export class CatmullRomSpline implements Shape {
 
   getSceneElement(): JSX.Element {
     const ElementObserver = observer(() => {
-      const geometry = new THREE.BufferGeometry().setFromPoints(
-        this.getCurvePoints(),
-      );
       const theme = useTheme();
+
       return (
         <group>
           <line_
-            geometry={geometry}
+            geometry={this.bakedPoints}
             onUpdate={(line) => line.computeLineDistances()}
           >
             <lineDashedMaterial

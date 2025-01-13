@@ -1,6 +1,6 @@
 import { BoundingBox } from "@/lib/drawing/shape/shape";
 import { AnySketchShape, Sketch } from "@/lib/drawing/sketch/sketch";
-import { Property, PropertyGroup } from "@/lib/property/types";
+import { PropertyGroup } from "@/lib/property/types";
 import { Box, useTheme } from "@mui/material";
 import { Canvas } from "@react-three/fiber";
 import { runInAction } from "mobx";

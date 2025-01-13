@@ -5,10 +5,10 @@ import { CatmullRomSpline } from "@/lib/drawing/shape/curve/catmull_rom_spline";
 import { DragPoint } from "@/lib/drawing/sketch/interaction";
 import { Sketch } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
-import { observer } from "mobx-react";
+import { autorun, runInAction } from "mobx";
 import * as THREE from "three";
 
-export const CatmullRomSplineSketch = observer(() => {
+export const CatmullRomSplineSketch = () => {
   const spline = new CatmullRomSpline("CRS", [
     new THREE.Vector3(0, 1, 0),
     new THREE.Vector3(1, 0, 0),
@@ -18,55 +18,52 @@ export const CatmullRomSplineSketch = observer(() => {
     new THREE.Vector3(6, 1, 0),
   ]);
 
-  const lineP0Drag = new DragPoint(
-    spline.points[0],
-    (p) => p,
-    (p, position) => p.set(position.x, position.y, 0),
-  );
-  const lineP1Drag = new DragPoint(
-    spline.points[1],
-    (p) => p,
-    (p, position) => p.set(position.x, position.y, 0),
-  );
-  const lineP2Drag = new DragPoint(
-    spline.points[2],
-    (p) => p,
-    (p, position) => p.set(position.x, position.y, 0),
-  );
-  const lineP3Drag = new DragPoint(
-    spline.points[3],
-    (p) => p,
-    (p, position) => p.set(position.x, position.y, 0),
-  );
-  const lineP4Drag = new DragPoint(
-    spline.points[4],
-    (p) => p,
-    (p, position) => p.set(position.x, position.y, 0),
-  );
-  const lineP5Drag = new DragPoint(
-    spline.points[5],
-    (p) => p,
-    (p, position) => p.set(position.x, position.y, 0),
+  const dragPoints = Array.from(Array(spline.pointCount).keys()).map(
+    (pointIndex) =>
+      new DragPoint(
+        spline.getPoint(pointIndex)!,
+        (p) => p,
+        (p, position) =>
+          runInAction(() =>
+            spline.setPoint(
+              pointIndex,
+              new THREE.Vector3(position.x, position.y, 0),
+            ),
+          ),
+      ),
   );
 
-  const sketchLine = new SketchShape(spline, [
-    lineP0Drag,
-    lineP1Drag,
-    lineP2Drag,
-    lineP3Drag,
-    lineP4Drag,
-    lineP5Drag,
-  ]);
+  const sketchLine = new SketchShape(spline, dragPoints);
 
-  const line0 = new Line("P0", spline.points[0], spline.points[1], {
+  const line0 = new Line("P0", spline.getPoint(0)!, spline.getPoint(1)!, {
     construction: true,
   });
   const line1 = new Line(
     "P1",
-    spline.points[spline.points.length - 2],
-    spline.points[spline.points.length - 1],
+    spline.getPoint(spline.pointCount - 2)!,
+    spline.getPoint(spline.pointCount - 1)!,
     { construction: true },
   );
+
+  autorun(() => {
+    const a = spline.getPoint(0);
+    const b = spline.getPoint(1);
+
+    runInAction(() => {
+      line0.a = a!;
+      line0.b = b!;
+    });
+  });
+
+  autorun(() => {
+    const a = spline.getPoint(spline.pointCount - 2);
+    const b = spline.getPoint(spline.pointCount - 1);
+
+    runInAction(() => {
+      line1.a = a!;
+      line1.b = b!;
+    });
+  });
 
   return (
     <SketchBook
@@ -75,4 +72,4 @@ export const CatmullRomSplineSketch = observer(() => {
       }
     />
   );
-});
+};
