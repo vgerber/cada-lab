@@ -87,7 +87,9 @@ export const MeshOffset = observer(() => {
   const offsetPosition = state.lineA.a
     .clone()
     .add(meanNormalVector.clone().multiplyScalar(offsetLength));
-  const shiftLine = new Line("Shift Line", state.lineA.a, offsetPosition);
+  const shiftLine = new Line("Shift Line", state.lineA.a, offsetPosition, {
+    construction: true,
+  });
 
   const offsetPoint = new Point("Shift Offset", offsetPosition);
 
