@@ -4,6 +4,7 @@ import { Line } from "@/lib/drawing/shape/2d/line";
 import { DragPoint } from "@/lib/drawing/sketch/interaction";
 import { Sketch } from "@/lib/drawing/sketch/sketch";
 import { SketchShape } from "@/lib/drawing/sketch/sketch_shape";
+import { NumberProperty, PropertyGroup } from "@/lib/property/types";
 import { runInAction } from "mobx";
 import * as THREE from "three";
 
@@ -59,10 +60,17 @@ export default function LinePointDistanceSketch() {
   return (
     <SketchBook
       sketch={
-        new Sketch([
-          sketchLine,
-          new SketchShape(closestPointLine, [lineClosestPointDrag]),
-        ])
+        new Sketch(
+          [
+            sketchLine,
+            new SketchShape(closestPointLine, [lineClosestPointDrag]),
+          ],
+          new PropertyGroup("Line-Point", [
+            new NumberProperty("Distance", undefined, () =>
+              closestPointLine.length(),
+            ),
+          ]),
+        )
       }
     />
   );

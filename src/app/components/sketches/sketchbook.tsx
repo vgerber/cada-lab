@@ -34,10 +34,7 @@ export const SketchBook = observer(
     }));
 
     function getProperties(): PropertyGroup {
-      return new PropertyGroup(
-        "Sketch",
-        sketch.shapes.map((shape) => shape.getShape().getProperties()),
-      );
+      return sketch.properties;
     }
 
     function onShapeUpdateEnd(sketchShape: AnySketchShape) {

@@ -1,3 +1,5 @@
+import { PropertyGroup } from "@/lib/property/types";
+import { makeAutoObservable } from "mobx";
 import * as THREE from "three";
 import { SketchShape } from "./sketch_shape";
 
@@ -23,11 +25,25 @@ export type AnySketchShape = SketchShape<any>;
 
 export class Sketch {
   shapes: AnySketchShape[];
+  properties: PropertyGroup;
   private cachedBoundingBox: BoundingBox;
 
-  constructor(shapes: AnySketchShape[]) {
+  constructor(shapes: AnySketchShape[], properties?: PropertyGroup) {
     this.shapes = shapes;
     this.cachedBoundingBox = this.updateBoundingBox();
+
+    if (properties) {
+      this.properties = new PropertyGroup(properties.name, [
+        ...properties.properties,
+        ...shapes.map((shape) => shape.getShape().getProperties()),
+      ]);
+    } else {
+      this.properties = new PropertyGroup(
+        "Sketch",
+        shapes.map((shape) => shape.getShape().getProperties()),
+      );
+    }
+    makeAutoObservable(this);
   }
 
   clone(): Sketch {

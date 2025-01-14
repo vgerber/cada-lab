@@ -15,7 +15,6 @@ const NumberInput = styled("input")(({ theme }) => ({
   ":read-only": {
     background: "#222",
     borderColor: "#222",
-    color: theme.palette.text.secondary,
   },
 }));
 
