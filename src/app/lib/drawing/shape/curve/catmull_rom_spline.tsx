@@ -1,8 +1,8 @@
 import { useTheme } from "@mui/material";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { observer } from "mobx-react";
 import * as THREE from "three";
-import { PropertyGroup } from "../../../property/types";
+import { NumberRangeProperty, PropertyGroup } from "../../../property/types";
 import { BoundingBox, Shape } from "../shape";
 
 export class CatmullRomSpline implements Shape {
@@ -66,7 +66,20 @@ export class CatmullRomSpline implements Shape {
   }
 
   getProperties(): PropertyGroup {
-    return new PropertyGroup(this.name, []);
+    return new PropertyGroup(this.name, [
+      new NumberRangeProperty(
+        "Alpha",
+        (value) =>
+          runInAction(() => {
+            this.alpha = value;
+            this.bake();
+          }),
+        () => this.alpha,
+        0,
+        2,
+        0.1,
+      ),
+    ]);
   }
 
   getBoundingBox(): BoundingBox {
