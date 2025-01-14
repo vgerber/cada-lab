@@ -1,5 +1,6 @@
 "use client";
 import { SketchBook } from "@/components/sketches/sketchbook";
+import { NumberRangeProperty, PropertyGroup } from "@/lib/property/types";
 import { runInAction } from "mobx";
 import { observer, useLocalObservable } from "mobx-react";
 import * as THREE from "three";
@@ -7,11 +8,12 @@ import { MathUtils } from "three";
 import { Line } from "../../../lib/drawing/shape/2d/line";
 import { Point } from "../../../lib/drawing/shape/2d/point";
 import { DragPoint } from "../../../lib/drawing/sketch/interaction";
-import { AnySketchShape, Sketch } from "../../../lib/drawing/sketch/sketch";
+import { Sketch } from "../../../lib/drawing/sketch/sketch";
 import { SketchShape } from "../../../lib/drawing/sketch/sketch_shape";
 
 export const MeshOffset = observer(() => {
   const state = useLocalObservable(() => ({
+    meshOffset: 0.3,
     lineA: new Line(
       "Line A",
       new THREE.Vector3(0, 0, 0),
@@ -22,9 +24,10 @@ export const MeshOffset = observer(() => {
       new THREE.Vector3(0, 0, 0),
       new THREE.Vector3(-1, 1, 0),
     ),
+    changeOffset(offset: number) {
+      this.meshOffset = offset;
+    },
   }));
-
-  const meshOffset = 0.3;
 
   const lineAADrag = new DragPoint(
     state.lineA,
@@ -62,13 +65,13 @@ export const MeshOffset = observer(() => {
   const normalLineA = new Line(
     "Normal A",
     state.lineA.a,
-    state.lineA.a.clone().add(normalA.clone().multiplyScalar(meshOffset)),
+    state.lineA.a.clone().add(normalA.clone().multiplyScalar(state.meshOffset)),
     { construction: true },
   );
   const normalLineB = new Line(
     "Normal B",
     state.lineA.a,
-    state.lineA.a.clone().add(normalB.clone().multiplyScalar(meshOffset)),
+    state.lineA.a.clone().add(normalB.clone().multiplyScalar(state.meshOffset)),
     { construction: true },
   );
 
@@ -77,7 +80,7 @@ export const MeshOffset = observer(() => {
   );
   console.log(MathUtils.radToDeg(alpha).toFixed(0));
 
-  const offsetLength = Math.abs(meshOffset) / Math.cos(alpha / 2);
+  const offsetLength = Math.abs(state.meshOffset) / Math.cos(alpha / 2);
 
   const meanNormalVector = normalLineA
     .dirNormalized()
@@ -96,36 +99,26 @@ export const MeshOffset = observer(() => {
   const lineAOpposite = new Line(
     "A Opposite",
     offsetPosition,
-    state.lineA.a.clone().add(normalA.clone().multiplyScalar(meshOffset)),
+    state.lineA.a.clone().add(normalA.clone().multiplyScalar(state.meshOffset)),
     { construction: true },
   );
   const lineBOpposite = new Line(
     "B Opposite",
     offsetPosition,
-    state.lineB.a.clone().add(normalB.clone().multiplyScalar(meshOffset)),
+    state.lineB.a.clone().add(normalB.clone().multiplyScalar(state.meshOffset)),
     { construction: true },
   );
 
   const lineAOffset = new Line(
     "Line A (Offset)",
     offsetPosition,
-    state.lineA.b.clone().add(normalA.clone().multiplyScalar(meshOffset)),
+    state.lineA.b.clone().add(normalA.clone().multiplyScalar(state.meshOffset)),
   );
   const lineBOffset = new Line(
     "Line B (Offset)",
     offsetPosition,
-    state.lineB.b.clone().add(normalB.clone().multiplyScalar(meshOffset)),
+    state.lineB.b.clone().add(normalB.clone().multiplyScalar(state.meshOffset)),
   );
-
-  function onUpdateShape(sketchShape: AnySketchShape) {
-    // const updatedShapeName = (sketchShape.shape as Shape).getName();
-    // if (updatedShapeName === lineA.getName()) {
-    //   setLineA(sketchShape.getShape().clone());
-    // }
-    // if (updatedShapeName === lineB.getName()) {
-    //   setLineB(sketchShape.getShape().clone());
-    // }
-  }
 
   const shapes = [
     sketchLineA,
@@ -142,8 +135,21 @@ export const MeshOffset = observer(() => {
 
   return (
     <SketchBook
-      sketch={new Sketch(shapes)}
-      onUpdate={(sketchShape) => onUpdateShape(sketchShape)}
+      sketch={
+        new Sketch(
+          shapes,
+          new PropertyGroup("Mesh Offset", [
+            new NumberRangeProperty(
+              "Offset",
+              (offset) => state.changeOffset(offset),
+              () => state.meshOffset,
+              0.1,
+              1,
+              0.01,
+            ),
+          ]),
+        )
+      }
     />
   );
 });
