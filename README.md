@@ -1,6 +1,6 @@
 # [Cada Lab](https://vgerber.github.io/cada-lab)
 
-Write interactive sketches to play with geometry related algorithms
+Write interactive sketches to play with geometry related algorithms (in nextjs + typescript)
 
 ![App Image](doc/images/app.png)
 
@@ -11,13 +11,13 @@ npm i
 npm run dev
 ```
 
-And visit `localhost:3000`. You will be automatically redirect to the default sketch from your local [.env](.env) file
+And visit `localhost:3000`. You will be automatically redirected to the default sketch from your local [.env](.env) file
 
 The project is intended to be used as static export.
 
 ## Adding a sketch
 
-To add a new sketch, simply copy a sketch from [sketches](src/app/components/sketches/) like a [simple line](src/app/components/sketches/shape/2d/line.tsx).
+To add a new sketch, simply copy a sketch from [sketches](src/app/components/sketches/) like a [simple line](src/app/components/sketches/shape/2d/line.tsx). And create a new react component
 
 ```tsx
 export default function LineShape2d() {
