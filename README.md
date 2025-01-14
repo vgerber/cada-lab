@@ -1,4 +1,4 @@
-# Cada Lab ![Static Badge](https://img.shields.io/badge/Webapp-red?link=https%3A%2F%2Fvgerber.github.io%2Fcada-lab)
+# [Cada Lab](https://vgerber.github.io/cada-lab)
 
 Write interactive sketches to play with geometry related algorithms
 
