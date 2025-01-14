@@ -29,8 +29,6 @@ function setupSketch(): Sketch {
     (l, position) =>
       runInAction(() => (l.b = new THREE.Vector3(position.x, position.y, 0))),
   );
-  const sketchLine = new SketchShape(line);
-  sketchLine.addInteractable(lineADrag);
-  sketchLine.addInteractable(lineBDrag);
+  const sketchLine = new SketchShape(line, [lineADrag, lineBDrag]);
   return new Sketch([sketchLine]);
 }

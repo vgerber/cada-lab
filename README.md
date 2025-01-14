@@ -1,34 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cada Lab ![Static Badge](https://img.shields.io/badge/Webapp-red?link=https%3A%2F%2Fvgerber.github.io%2Fcada-lab)
+
+Write interactive sketches to play with geometry related algorithms
+
+![App Image](doc/images/app.png)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm i
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+And visit `localhost:3000`. You will be automatically redirect to the default sketch from your local [.env](.env) file
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+The project is intended to be used as static export.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Adding a sketch
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+To add a new sketch, simply copy a sketch from [sketches](src/app/components/sketches/) like a [simple line](src/app/components/sketches/shape/2d/line.tsx).
 
-## Learn More
+```tsx
+export default function LineShape2d() {
+  return <SketchBook sketch={setupSketch()} />;
+}
 
-To learn more about Next.js, take a look at the following resources:
+function setupSketch(): Sketch {
+  const line = new Line(
+    "Line 1",
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(1, 1, 0),
+  );
+  const lineADrag = new DragPoint(
+    line,
+    (l) => l.a,
+    (l, position) =>
+      runInAction(() => (l.a = new THREE.Vector3(position.x, position.y, 0))),
+  );
+  const lineBDrag = new DragPoint(
+    line,
+    (l) => l.b,
+    (l, position) =>
+      runInAction(() => (l.b = new THREE.Vector3(position.x, position.y, 0))),
+  );
+  const sketchLine = new SketchShape(line, [lineADrag, lineBDrag]);
+  return new Sketch([sketchLine]);
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Then register the new sketch in the [registry](src/app/components/sketches/registered_sketches.tsx)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```tsx
+export const registeredSketches: Record<string, SketchRegistrationGroup> = {
+  "shapes/2d": {
+    name: "Shapes 2D",
+    registrations: {
+      line: {
+        name: "Line",
+        component: <LineShape2d />,
+      },
+    },
+  },
+};
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+With `npm run dev` the new sketch should be listed in the sidebar.
