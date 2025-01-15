@@ -1,6 +1,6 @@
+"use client";
 import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react";
-import { useTheme } from "styled-components";
 import * as THREE from "three";
 import { PropertyGroup } from "../../../property/types";
 import { BoundingBox, Shape } from "../shape";
@@ -38,6 +38,11 @@ export class LineStrip implements Shape {
     this.bake();
   }
 
+  setPoints(points: THREE.Vector3[]) {
+    this.points = points;
+    this.bake();
+  }
+
   getPoint(pointIndex: number): THREE.Vector3 | undefined {
     return this.points[pointIndex];
   }
@@ -49,14 +54,6 @@ export class LineStrip implements Shape {
   bake() {
     this.bakedPoints = new THREE.BufferGeometry().setFromPoints(this.points);
     this.bakedPoints.computeBoundingBox();
-
-    // update bounding box
-    const min = this.points[0].clone();
-    const max = this.points[0].clone();
-    this.points.forEach((p) => {
-      min.min(p);
-      max.max(p);
-    });
 
     if (!this.bakedPoints.boundingBox) {
       return;
@@ -78,7 +75,7 @@ export class LineStrip implements Shape {
 
   getSceneElement(): JSX.Element {
     const ElementObserver = observer(() => {
-      const theme = useTheme();
+      //const theme = useTheme();
 
       return (
         <group>
@@ -88,7 +85,7 @@ export class LineStrip implements Shape {
           >
             <lineDashedMaterial
               attach="material"
-              color={theme.canvas.line.default}
+              color={"#fff"}
               linewidth={1}
               gapSize={0}
               dashSize={0}

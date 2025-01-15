@@ -1,8 +1,9 @@
 import { Point } from "@/lib/drawing/shape/2d/point";
 import { useTheme } from "@mui/material";
+import { observable } from "mobx";
 import * as THREE from "three";
 
-export default function PointShapeElement({ point }: { point: Point }) {
+export const PointShapeElement = observable(({ point }: { point: Point }) => {
   const theme = useTheme();
   const geometry = new THREE.BufferGeometry().setFromPoints([point.position]);
 
@@ -13,4 +14,4 @@ export default function PointShapeElement({ point }: { point: Point }) {
       </points>
     </group>
   );
-}
+});

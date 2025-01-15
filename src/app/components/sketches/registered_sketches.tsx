@@ -4,7 +4,8 @@ import CircleShape2d from "@/components/sketches/shape/2d/circle";
 import LineShape2d from "@/components/sketches/shape/2d/line";
 import RectangleShape2d from "@/components/sketches/shape/2d/rect";
 import TriangleShape2d from "@/components/sketches/shape/2d/triangle";
-import { CatmullRomSplineSketch } from "@/components/sketches/shape/catmull_rom_spline";
+import { BezierCurveSketch } from "@/components/sketches/shape/curve/bezier_curve";
+import { CatmullRomSplineSketch } from "@/components/sketches/shape/curve/catmull_rom_spline";
 import { ReactNode } from "react";
 
 export type SketchRegistration = {
@@ -45,6 +46,10 @@ export const registeredSketches: Record<string, SketchRegistrationGroup> = {
       "catmull-rom-spline": {
         name: "Catmull-Rom-Spline",
         component: <CatmullRomSplineSketch />,
+      },
+      "bezier-curve": {
+        name: "Bezier-Curve",
+        component: <BezierCurveSketch />,
       },
     },
   },
