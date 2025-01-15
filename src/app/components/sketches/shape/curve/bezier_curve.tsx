@@ -38,7 +38,7 @@ export const BezierCurveSketch = () => {
   );
 
   const splineStepLine = new Line(
-    "Spline step line",
+    "Curve step line",
     controlPoint1.a,
     controlPoint2.b,
     {
@@ -127,7 +127,7 @@ export const BezierCurveSketch = () => {
             splineStepPointSketch,
             splineStripSketch,
           ],
-          new PropertyGroup("B-Spline", [
+          new PropertyGroup("Bezier-Curve", [
             new NumberRangeProperty(
               "Step",
               (step) => state.changeSplineStep(step),
